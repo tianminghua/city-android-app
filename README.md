@@ -11,7 +11,7 @@ The code for CS427 Android app.
 | Tong Li          |               | tongli2        | Manager    |               |
 | Wesley Ecoiffier |               | WesleyIllinois | Developer  |               |
 | Dezhao Li        | dezhaol2      | tianminghua    | Developer  | Java, Javascript, Python |
-| Lomis Chen       |               |                | Developer  |               |
+| Lomis Chen       |    yyc2           | chenlomis               | Developer  |  python             |
 | Xiao Zhuang      |               | lefthand-user  | Developer  |               |
 |                  |               |                |            |               |
 |                  |               |                |            |               |
