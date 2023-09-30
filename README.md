@@ -10,7 +10,7 @@ The code for CS427 Android app.
 | Ammara Ashraf    | aashra5       | aashra5        | Tech Lead  |  Java, Javascript, C, C++, Python, C Sharp, HTML, SQL   |            
 | Tong Li          |               | tongli2        | Manager    |               |
 | Wesley Ecoiffier |               | WesleyIllinois | Developer  |               |
-| Dezhao Li        |               | tianminghua    | Developer  |               |
+| Dezhao Li        | dezhaol2      | tianminghua    | Developer  | Java, Javascript, Python |
 | Lomis Chen       |               |                | Developer  |               |
 | Xiao Zhuang      |               | lefthand-user  | Developer  |               |
 |                  |               |                |            |               |
