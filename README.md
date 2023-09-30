@@ -6,8 +6,8 @@ The code for CS427 Android app.
 <b>Team # member information</b>
 <br/>
 | Name             | NetID         | GitHub ID   | Role          | Experience    |
-| -------------    | ------------- | -------------- | ------------- | ------------- |
-| Ammara Ashraf    | aashra5       | aashra5        | Tech Lead  |               |            
+| -------------    | ------------- | -------------- | ---------- | ------------- |
+| Ammara Ashraf    | aashra5       | aashra5        | Tech Lead  |  Java, Javascript, C, C++, Python, C Sharp, HTML, SQL   |            
 | Tong Li          |               | tongli2        | Manager    |               |
 | Wesley Ecoiffier |               | WesleyIllinois | Developer  |               |
 | Dezhao Li        |               | tianminghua    | Developer  |               |
