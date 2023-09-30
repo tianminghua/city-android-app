@@ -12,7 +12,7 @@ The code for CS427 Android app.
 | Wesley Ecoiffier |               | WesleyIllinois | Developer  |               |
 | Dezhao Li        | dezhaol2      | tianminghua    | Developer  | Java, Javascript, Python |
 | Lomis Chen       |    yyc2           | chenlomis               | Developer  |  python             |
-| Xiao Zhuang      |               | lefthand-user  | Developer  |               |
+| Xiao Zhuang      |    xzhuang8   | lefthand-user  | Developer  |  C++, C, Python         |
 |                  |               |                |            |               |
 |                  |               |                |            |               |
 <br/>
