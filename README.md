@@ -21,7 +21,7 @@ The code for CS427 Android app.
 <b>Weekly Progress Reports</b>
 </br> 
 </br>
-Meeting time: Every Saturday 11:00 AM
+Meeting time: Every Saturday 11:00 AM 
 </br> 
 Meeting location (zoom link): https://us05web.zoom.us/j/86843523308?pwd=DdOJxPn88OYjvIXNHtEmHn2RE3ODf3.1
 </br> 
