@@ -13,7 +13,7 @@ The code for CS427 Android app.
 | Dezhao Li        | dezhaol2      | tianminghua    | Developer  | Java, Javascript, Python |
 | Lomis Chen       |    yyc2           | chenlomis               | Developer  |  python             |
 | Xiao Zhuang      |    xzhuang8   | lefthand-user  | Developer  |  C++, C, Python         |
-| Daniel Xu        | xx15          | danielxu2001   | Developer  | Python, Java, C, C++, SQL, JavaScript, HTML/CSS
+|                  |               |                |            |               |
 |                  |               |                |            |               |
 <br/>
 
