@@ -34,7 +34,7 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|   aashra5             |                                 |                       |
+|   aashra5     |  We got to know each teammate and assign each teammate assignment.                               |                       |
 |   tongli2             |                                 |                       |
 |   wesleye2              |                                 |                       |
 |   dezhaol2              |                                 |                       |
