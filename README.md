@@ -34,13 +34,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5             |                                 |                       |
+|   tongli2             |                                 |                       |
+|   wesleye2              |                                 |                       |
+|   dezhaol2              |                                 |                       |
+|   yyc2              |                                 |                       |
+|   xzhuang8             |                                 |                       |
+|   xx15             |                                 |                       |
 |                |                                 |                       |
 </br>
 
