@@ -12,11 +12,22 @@ import androidx.navigation.ui.AppBarConfiguration;
 import edu.uiuc.cs427app.databinding.ActivityMainBinding;
 
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    private FirebaseAuth mAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +41,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonChicago = findViewById(R.id.buttonChicago);
         Button buttonLA = findViewById(R.id.buttonLA);
         Button buttonNew = findViewById(R.id.buttonAddLocation);
+        Button buttonLogout = findViewById(R.id.logout);
+        TextView welcomeNote = findViewById(R.id.welcomeNote);
 
         buttonChampaign.setOnClickListener(this);
         buttonChicago.setOnClickListener(this);
         buttonLA.setOnClickListener(this);
         buttonNew.setOnClickListener(this);
+        buttonLogout.setOnClickListener(this);
+
+        // show the user name after login
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            String username = currentUser.getEmail();
+            welcomeNote.setVisibility(View.VISIBLE);
+            welcomeNote.setText("Welcome Back, " + username);
+        }
 
     }
 
@@ -60,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.buttonAddLocation:
                 // Implement this action to add a new location to the list of locations
                 break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(getIntent());
+                break;
+
         }
     }
 }
