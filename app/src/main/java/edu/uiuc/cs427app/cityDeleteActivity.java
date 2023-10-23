@@ -5,14 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class CitySearchActivity extends AppCompatActivity implements View.OnClickListener {
+public class cityDeleteActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_search);
+        setContentView(R.layout.activity_city_delete);
 
-        // Initializing the UI components
         ImageButton buttonBack = findViewById(R.id.backButton);
         buttonBack.setOnClickListener(this);
     }
