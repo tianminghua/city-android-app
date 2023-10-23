@@ -13,8 +13,10 @@ import edu.uiuc.cs427app.databinding.ActivityMainBinding;
 
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Initializing the UI components
         // The list of locations should be customized per user (change the implementation so that
         // buttons are added to layout programmatically
+        // Just try git push
         Button buttonChampaign = findViewById(R.id.buttonChampaign);
         Button buttonChicago = findViewById(R.id.buttonChicago);
         Button buttonLA = findViewById(R.id.buttonLA);
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonAddLocation:
                 // Implement this action to add a new location to the list of locations
+                Intent addIntent = new Intent(this,CitySearchActivity.class);
+                startActivity(addIntent);
                 break;
         }
     }
