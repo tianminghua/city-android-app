@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,8 +31,9 @@ public class LoginActivity extends AppCompatActivity {
 
     Button registerButton;
     Button loginButton;
-    String email = "test1@gmail.com";
-    String password = "123123";
+    TextInputEditText emailInput;
+    TextInputEditText passwordInput;
+
     FirebaseAuth mAuth;
 
     @Override
@@ -41,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         registerButton = findViewById(R.id.register);
         loginButton = findViewById(R.id.loginUser);
+        emailInput = findViewById(R.id.loginEmailBox);
+        passwordInput = findViewById(R.id.loginPasswordBox);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -61,6 +66,19 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email = String.valueOf(emailInput.getText());
+                String password = String.valueOf(passwordInput.getText());
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(LoginActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(LoginActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -112,8 +130,9 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.makeText(LoginActivity.this, "Authentication failed. Try again.",
                                             Toast.LENGTH_SHORT).show();
+                                    passwordInput.getText().clear();
                                     //updateUI(null);
                                 }
                             }

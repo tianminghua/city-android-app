@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         backToLogin = findViewById(R.id.backToLogin);
         registerButton = findViewById(R.id.registerUser);
-        String email = "test2@gmail.com";
+        String email = "test1@gmail.com";
         String password = "123123";
         mAuth = FirebaseAuth.getInstance();
 
