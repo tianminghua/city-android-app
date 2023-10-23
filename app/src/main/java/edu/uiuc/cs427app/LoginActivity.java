@@ -18,6 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         registerButton = findViewById(R.id.register);
         loginButton = findViewById(R.id.loginUser);
 
@@ -64,11 +71,44 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.d(TAG, "signInWithEmail:success! ");
                                     Toast.makeText(LoginActivity.this, "Signin Success! " + user.getEmail(),
                                             Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
 
-                                    //updateUI(user);
+                                    // fetch user profile from Firestore
+                                    db.collection("users")
+                                            .document(user.getUid())
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                                    if (task.isSuccessful()) {
+                                                        DocumentSnapshot document = task.getResult();
+
+                                                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                                        String name = document.getData().get("name").toString();
+                                                        String email = document.getData().get("email").toString();
+                                                        int theme =Integer.valueOf(document.getData().get("theme").toString());
+                                                        User userObject = new User(name, email, theme);
+
+                                                        List<String> cityList = (List<String>) document.getData().get("cities");
+                                                        assert cityList != null;
+                                                        for (String cityInfo : cityList) {
+                                                            Log.d(TAG, "City data: " + cityInfo);
+                                                            String[] cityDetail = cityInfo.split(",");
+                                                            City newCity = new City(cityDetail[0], Double.parseDouble(cityDetail[1]), Double.parseDouble(cityDetail[2]));
+                                                            userObject.addCity(newCity);
+                                                        }
+
+                                                        // pass userObject to MainActivity
+                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                        intent.putExtra("user", userObject);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        Log.w(TAG, "Error getting documents.", task.getException());
+                                                    }
+                                                }
+                                            });
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());

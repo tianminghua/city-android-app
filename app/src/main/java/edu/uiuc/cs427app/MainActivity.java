@@ -1,10 +1,15 @@
 package edu.uiuc.cs427app;
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,9 +34,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ActivityMainBinding binding;
 
     private FirebaseAuth mAuth;
+    //private FirebaseFirestore db;
 
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +62,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // show the user name after login
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
+
+        User currUser = (User)getIntent().getSerializableExtra("user");
+
+        if (currUser == null) {
+            mAuth.signOut();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
         } else {
-            String username = currentUser.getEmail();
             welcomeNote.setVisibility(View.VISIBLE);
-            welcomeNote.setText("Welcome Back, " + username);
+            welcomeNote.setText("Welcome Back, " + currUser.getName() +
+                    "\n" + "Email: " + currUser.getEmail() + "    UI Theme: " + currUser.getTheme());
         }
 
     }
@@ -90,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 finish();
-                startActivity(getIntent());
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
 
         }
