@@ -57,7 +57,7 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 |   tongli2     |  We discussed the next step of the project|                       |
 |   wesleye2              |                                 |                       |
 |   dezhaol2              |                                 |                       |
-|   yyc2              |                                 |                       |
+|   yyc2              |  We'd reviewed the requirements live as well as next steps on wrapping up the assignment  |                       |
 |   xzhuang8             |                                 |                       |
 |   xx15             |                                 |                       |
 |                |                                 |                       |
