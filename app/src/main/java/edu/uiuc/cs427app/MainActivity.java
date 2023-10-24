@@ -28,8 +28,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -47,17 +49,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Initializing the UI components
         // The list of locations should be customized per user (change the implementation so that
         // buttons are added to layout programmatically
+        // Just try git push
         Button buttonChampaign = findViewById(R.id.buttonChampaign);
         Button buttonChicago = findViewById(R.id.buttonChicago);
         Button buttonLA = findViewById(R.id.buttonLA);
         Button buttonNew = findViewById(R.id.buttonAddLocation);
+
         Button buttonLogout = findViewById(R.id.logout);
         TextView welcomeNote = findViewById(R.id.welcomeNote);
+
+        Button buttonDelete = findViewById(R.id.listManagementButton);
+
 
         buttonChampaign.setOnClickListener(this);
         buttonChicago.setOnClickListener(this);
         buttonLA.setOnClickListener(this);
         buttonNew.setOnClickListener(this);
+
         buttonLogout.setOnClickListener(this);
 
         // show the user name after login
@@ -75,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             welcomeNote.setText("Welcome Back, " + currUser.getName() +
                     "\n" + "Email: " + currUser.getEmail() + "    UI Theme: " + currUser.getTheme());
         }
+
+        buttonDelete.setOnClickListener(this);
+
 
     }
 
@@ -99,6 +110,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonAddLocation:
                 // Implement this action to add a new location to the list of locations
+                Intent addIntent = new Intent(this,CitySearchActivity.class);
+                startActivity(addIntent);
+                break;
+            case R.id.listManagementButton:
+                // Implement this action to add a new location to the list of locations
+                Intent deleteIntent = new Intent(this,cityDeleteActivity.class);
+                startActivity(deleteIntent);
                 break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
