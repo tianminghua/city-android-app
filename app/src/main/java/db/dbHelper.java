@@ -1,8 +1,13 @@
 package db;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class dbHelper extends SQLiteOpenHelper {
 
@@ -45,5 +50,58 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
+
+    //check username
+    public long ensureUserExists(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = {COLUMN_USER_ID};
+        String selection = COLUMN_USERNAME + " = ?";
+        String[] selectionArgs = {username};
+        Cursor cursor = db.query(TABLE_USERS, columns, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex(COLUMN_USER_ID);
+            if (columnIndex != -1) {
+                return cursor.getLong(columnIndex);
+            } else {
+                return -1;
+            }
+        } else {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_USERNAME, username);
+            values.put(COLUMN_PASSWORD, "123");
+            return db.insert(TABLE_USERS, null, values);
+        }
+    }
+
+    // Get user's citylist by username
+    public List<String> getCityListForUser(long userId) {
+        List<String> cityList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_CITY_NAME};
+        String selection = COLUMN_CITY_USER_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+        Cursor cursor = db.query(TABLE_CITIES, columns, selection, selectionArgs, null, null, null);
+        while (cursor.moveToNext()) {
+            int columnIndex = cursor.getColumnIndex(COLUMN_CITY_NAME);
+            if (columnIndex != -1) {
+                String cityName = cursor.getString(columnIndex);
+                cityList.add(cityName);
+            } else {
+                return cityList; //
+            }
+        }
+        cursor.close();
+        return cityList;
+    }
+
+    // add city
+    public void addCityForUser(long userId, String cityName) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CITY_NAME, cityName);
+        values.put(COLUMN_CITY_USER_ID, userId);
+        db.insert(TABLE_CITIES, null, values);
+    }
+
 }
 
