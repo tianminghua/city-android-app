@@ -119,7 +119,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.listManagementButton:
                 // Implement this action to add a new location to the list of locations
                 intent = new Intent(this,cityDeleteActivity.class);
-                startActivity(intent);
+                User currUser1 = (User) getIntent().getSerializableExtra("user");
+                if (currUser1 != null) {
+                    long userId = myDbHelper.ensureUserExists(currUser1.getEmail());
+                    intent.putExtra("userId", userId);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.logout:

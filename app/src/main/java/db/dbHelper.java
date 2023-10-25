@@ -103,5 +103,14 @@ public class dbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_CITIES, null, values);
     }
 
+    // delete city
+    public void deleteCityForUser(long userId, String cityName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = COLUMN_CITY_USER_ID + " = ? AND " + COLUMN_CITY_NAME + " = ?";
+        String[] whereArgs = new String[] { String.valueOf(userId), cityName };
+        db.delete(TABLE_CITIES, whereClause, whereArgs);
+        db.close();
+    }
+
 }
 

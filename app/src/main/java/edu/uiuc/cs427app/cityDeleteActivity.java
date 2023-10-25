@@ -1,17 +1,51 @@
 package edu.uiuc.cs427app;
 
 import android.widget.ImageButton;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import androidx.recyclerview.widget.RecyclerView;
+import db.dbHelper;
+import java.util.List;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 
 public class cityDeleteActivity extends AppCompatActivity implements View.OnClickListener{
-
+    private RecyclerView recyclerView;
+    private CityDeleteAdapter adapter;
+    private List<String> cityList;
+    private dbHelper myDbHelper;
+    private long userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_delete);
 
+        // city delete
+        recyclerView = findViewById(R.id.recyclerView1);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        userId = getIntent().getLongExtra("userId", -1);
+        if (userId == -1) {
+            Toast.makeText(this, "User ID is not passed properly", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        myDbHelper = new dbHelper(this);
+        cityList = myDbHelper.getCityListForUser(userId);
+        adapter = new CityDeleteAdapter(cityList, new CityDeleteAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                confirmAndDelete(position);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
+        //back to front
         ImageButton buttonBack = findViewById(R.id.backButton);
         buttonBack.setOnClickListener(this);
     }
@@ -23,5 +57,23 @@ public class cityDeleteActivity extends AppCompatActivity implements View.OnClic
                 finish();
                 break;
         }
+    }
+
+    // confirm delete or cancel
+    private void confirmAndDelete(final int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to delete this city?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        myDbHelper.deleteCityForUser(userId, cityList.get(position));
+                        cityList.remove(position);
+                        adapter.notifyDataSetChanged();
+                        Toast.makeText(cityDeleteActivity.this, "City deleted successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }
