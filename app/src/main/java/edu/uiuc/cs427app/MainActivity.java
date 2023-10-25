@@ -94,20 +94,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonLogout.setOnClickListener(this);
 
         // show the user name after login
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        User currUser = (User)getIntent().getSerializableExtra("user");
-//
-//        if (currUser == null) {
-//            mAuth.signOut();
-//            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//            startActivity(intent);
-//            finish();
-//        } else {
-//            welcomeNote.setVisibility(View.VISIBLE);
-//            welcomeNote.setText("Welcome Back, " + currUser.getName() +
-//                    "\n" + "Email: " + currUser.getEmail() + "    UI Theme: " + currUser.getTheme());
-//        }
+        mAuth = FirebaseAuth.getInstance();
+
+        User currUser = (User)getIntent().getSerializableExtra("user");
+
+        if (currUser == null) {
+            mAuth.signOut();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            welcomeNote.setVisibility(View.VISIBLE);
+            welcomeNote.setText("Welcome Back, " + currUser.getName() +
+                    "\n" + "Email: " + currUser.getEmail() + "    UI Theme: " + currUser.getTheme());
+        }
 
         buttonDelete.setOnClickListener(this);
 

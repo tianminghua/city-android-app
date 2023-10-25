@@ -13,16 +13,24 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterActivity extends AppCompatActivity {
 
     Button backToLogin;
     Button registerButton;
     FirebaseAuth mAuth;
+    TextInputEditText emailInput;
+    TextInputEditText passwordInput;
+    TextInputEditText nameInput;
+    TextInputEditText themeInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +38,14 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         backToLogin = findViewById(R.id.backToLogin);
         registerButton = findViewById(R.id.registerUser);
-        String email = "test1@gmail.com";
-        String password = "123123";
+
+        emailInput = findViewById(R.id.registerEmailBox);
+        passwordInput = findViewById(R.id.registerPasswordBox);
+        nameInput = findViewById(R.id.registerNameBox);
+        themeInput = findViewById(R.id.registerThemeBox);
+
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -53,6 +66,13 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email = String.valueOf(emailInput.getText());
+                String password = String.valueOf(passwordInput.getText());
+                String name = String.valueOf(nameInput.getText());
+                int theme = themeInput.getText().length();
+
+                User userObject = new User(name, email, theme);
+
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -63,7 +83,27 @@ public class RegisterActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Toast.makeText(RegisterActivity.this, user.getEmail() + ", your account is created",
                                             Toast.LENGTH_SHORT).show();
+
+                                    db.collection("users").document(user.getUid())
+                                            .set(userObject)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Error writing document", e);
+                                                }
+                                            });
+
                                     //updateUI(user);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.putExtra("user", userObject);
+                                    startActivity(intent);
+                                    finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
