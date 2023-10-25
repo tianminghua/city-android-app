@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import db.dbHelper;
 import edu.uiuc.cs427app.databinding.ActivityMainBinding;
 
 import android.widget.Button;
@@ -37,7 +38,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
     private CityAdapter cityAdapter;
-    List<String>cityList = new ArrayList<>(); // city list to show
+    private dbHelper myDbHelper;
+    List<String>mycityList = new ArrayList<>(); // city list to show
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -57,27 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // The list of locations should be customized per user (change the implementation so that
         // buttons are added to layout programmatically
 
-        // Show city list
-        //cityList = DBManager.queryAllCityName();
-//        if(cityList.size()==0){
-//            cityList.add("Champaign");
-//            cityList.add("LA");
-//            cityList.add("NYC");
-//            cityAdapter.notifyDataSetChanged();
-//        }
-
-        recyclerView = findViewById(R.id.recyclerView);
-        cityAdapter = new CityAdapter(cityList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(cityAdapter);
-        loadData();
-
-
-
-
-//        Button buttonChampaign = findViewById(R.id.buttonChampaign);
-//        Button buttonChicago = findViewById(R.id.buttonChicago);
-//        Button buttonLA = findViewById(R.id.buttonLA);
         Button buttonNew = findViewById(R.id.buttonAddLocation);
 
         Button buttonLogout = findViewById(R.id.logout);
@@ -86,14 +67,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonDelete = findViewById(R.id.listManagementButton);
 
 
-//        buttonChampaign.setOnClickListener(this);
-//        buttonChicago.setOnClickListener(this);
-//        buttonLA.setOnClickListener(this);
         buttonNew.setOnClickListener(this);
-
         buttonLogout.setOnClickListener(this);
+        myDbHelper = new dbHelper(this);
 
-        // show the user name after login
+        // show the username after login
         mAuth = FirebaseAuth.getInstance();
 
         User currUser = (User)getIntent().getSerializableExtra("user");
@@ -107,6 +85,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             welcomeNote.setVisibility(View.VISIBLE);
             welcomeNote.setText("Welcome Back, " + currUser.getName() +
                     "\n" + "Email: " + currUser.getEmail() + "    UI Theme: " + currUser.getTheme());
+
+
+            long userId = myDbHelper.ensureUserExists(currUser.getEmail());
+            recyclerView = findViewById(R.id.recyclerView);
+            cityAdapter = new CityAdapter(mycityList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(cityAdapter);
+            loadData(userId);
         }
 
         buttonDelete.setOnClickListener(this);
@@ -118,31 +104,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-//            case R.id.buttonChampaign:
-//                intent = new Intent(this, DetailsActivity.class);
-//                intent.putExtra("city", "Champaign");
-//                startActivity(intent);
-//                break;
-//            case R.id.buttonChicago:
-//                intent = new Intent(this, DetailsActivity.class);
-//                intent.putExtra("city", "Chicago");
-//                startActivity(intent);
-//                break;
-//            case R.id.buttonLA:
-//                intent = new Intent(this, DetailsActivity.class);
-//                intent.putExtra("city", "Los Angeles");
-//                startActivity(intent);
-//                break;
             case R.id.buttonAddLocation:
-                // Implement this action to add a new location to the list of locations
-                intent = new Intent(this,CitySearchActivity.class);
-                startActivity(intent);
+                intent = new Intent(this, CitySearchActivity.class);
+                User currUser = (User) getIntent().getSerializableExtra("user");
+                if (currUser != null) {
+                    long userId = myDbHelper.ensureUserExists(currUser.getEmail());
+                    intent.putExtra("userId", userId);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+                }
                 break;
+
             case R.id.listManagementButton:
                 // Implement this action to add a new location to the list of locations
                 intent = new Intent(this,cityDeleteActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 finish();
@@ -155,19 +134,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // test when click show detail, it will get city name
     public void showDetails(View view) {
         int itemPosition = recyclerView.getChildLayoutPosition((View) view.getParent());
-        String cityName = cityList.get(itemPosition);
+        String cityName = mycityList.get(itemPosition);
         Toast Toast = null;
         Toast.makeText(this, "Showing details for " + cityName, Toast.LENGTH_SHORT).show();
     }
 
-    // load city data
-    private void loadData() {
-        cityList.add("New York");
-        cityList.add("Los Angeles");
-        cityList.add("Chicago");
-        //Log.d("MainActivity", "Loaded cities: " + cityList.size());
+    // load city data from db by username
+    private void loadData(long userId) {
+        mycityList.clear();
+        mycityList.addAll(myDbHelper.getCityListForUser(userId));
+        //mycityList = myDbHelper.getCityListForUser(userId);
         cityAdapter.notifyDataSetChanged();
     }
+
+    // update UI to show new city list after come back from other activity
+    @Override
+    protected void onResume() {
+        super.onResume();
+        User currUser = (User) getIntent().getSerializableExtra("user");
+        if (currUser != null) {
+            long userId = myDbHelper.ensureUserExists(currUser.getEmail());
+            loadData(userId);
+        }
+    }
+
+
 }
 
 
