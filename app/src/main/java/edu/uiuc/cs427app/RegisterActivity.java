@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,6 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.registerPasswordBox);
         nameInput = findViewById(R.id.registerNameBox);
 
+        Spinner colorSpinner = findViewById(R.id.registerThemeBox);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.colors_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        colorSpinner.setAdapter(adapter);
+
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -69,7 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = String.valueOf(emailInput.getText());
                 String password = String.valueOf(passwordInput.getText());
                 String name = String.valueOf(nameInput.getText());
-                int theme = 1;
+                String theme = colorSpinner.getSelectedItem().toString();
+
 
 
 

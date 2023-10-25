@@ -5,4 +5,10 @@
     <string name="backToMain">back to main page</string>
     <string name="showUserName">"Welcome back! "</string>
     <string name="register">Register</string>
+    <string-array name="colors_array">
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Purple</item>
+    </string-array>
 </resources>
+

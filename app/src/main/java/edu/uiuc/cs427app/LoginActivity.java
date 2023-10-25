@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                                         String name = document.getData().get("name").toString();
                                                         String email = document.getData().get("email").toString();
-                                                        int theme =Integer.valueOf(document.getData().get("theme").toString());
+                                                        String theme = document.getData().get("theme").toString();
                                                         User userObject = new User(name, email, user.getUid(), theme);
 
                                                         List<Map<String, String>> cityList = (List<Map<String, String>>) document.getData().get("cities");

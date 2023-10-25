@@ -10,11 +10,11 @@ public class User implements Serializable{
 
     private String name;
     private String email;
-    private int theme;
+    private String theme;
     private String UID;
     private List<City> cities;
 
-    User(String name, String email, String UID, int theme) {
+    User(String name, String email, String UID, String theme) {
         this.name = name;
         this.email = email;
         this.theme = theme;
@@ -46,11 +46,11 @@ public class User implements Serializable{
         this.email = email;
     }
 
-    public int getTheme() {
+    public String getTheme() {
         return theme;
     }
 
-    public void setTheme(int theme) {
+    public void setTheme(String theme) {
         this.theme = theme;
     }
 
