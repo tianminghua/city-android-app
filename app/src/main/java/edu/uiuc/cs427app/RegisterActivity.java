@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText emailInput;
     TextInputEditText passwordInput;
     TextInputEditText nameInput;
-    TextInputEditText themeInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.registerEmailBox);
         passwordInput = findViewById(R.id.registerPasswordBox);
         nameInput = findViewById(R.id.registerNameBox);
-        themeInput = findViewById(R.id.registerThemeBox);
+
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -69,9 +69,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = String.valueOf(emailInput.getText());
                 String password = String.valueOf(passwordInput.getText());
                 String name = String.valueOf(nameInput.getText());
-                int theme = themeInput.getText().length();
+                int theme = 1;
 
-                User userObject = new User(name, email, theme);
+
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -83,6 +83,14 @@ public class RegisterActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Toast.makeText(RegisterActivity.this, user.getEmail() + ", your account is created",
                                             Toast.LENGTH_SHORT).show();
+
+                                    User userObject = new User(name, email, user.getUid(), theme);
+
+                                    City city1 = new City("Boston", "23.23", "32.32");
+                                    City city2 = new City("New York", "25.23", "35.32");
+
+                                    userObject.addCity(city1);
+                                    userObject.addCity(city2);
 
                                     db.collection("users").document(user.getUid())
                                             .set(userObject)

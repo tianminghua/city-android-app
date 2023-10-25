@@ -11,13 +11,14 @@ public class User implements Serializable{
     private String name;
     private String email;
     private int theme;
-
+    private String UID;
     private List<City> cities;
 
-    User(String name, String email, int theme) {
+    User(String name, String email, String UID, int theme) {
         this.name = name;
         this.email = email;
         this.theme = theme;
+        this.UID = UID;
         cities = new ArrayList<>();
     }
 
@@ -53,7 +54,13 @@ public class User implements Serializable{
         this.theme = theme;
     }
 
+    public String getUID() {
+        return UID;
+    }
 
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
 
 
 }

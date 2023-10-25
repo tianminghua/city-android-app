@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
@@ -106,14 +107,13 @@ public class LoginActivity extends AppCompatActivity {
                                                         String name = document.getData().get("name").toString();
                                                         String email = document.getData().get("email").toString();
                                                         int theme =Integer.valueOf(document.getData().get("theme").toString());
-                                                        User userObject = new User(name, email, theme);
+                                                        User userObject = new User(name, email, user.getUid(), theme);
 
-                                                        List<String> cityList = (List<String>) document.getData().get("cities");
+                                                        List<Map<String, String>> cityList = (List<Map<String, String>>) document.getData().get("cities");
                                                         assert cityList != null;
-                                                        for (String cityInfo : cityList) {
+                                                        for (Map<String, String> cityInfo : cityList) {
                                                             Log.d(TAG, "City data: " + cityInfo);
-                                                            String[] cityDetail = cityInfo.split(",");
-                                                            City newCity = new City(cityDetail[0], Double.parseDouble(cityDetail[1]), Double.parseDouble(cityDetail[2]));
+                                                            City newCity = new City(cityInfo.get("name"), cityInfo.get("coordX"), cityInfo.get("coordY"));
                                                             userObject.addCity(newCity);
                                                         }
 

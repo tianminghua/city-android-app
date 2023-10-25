@@ -5,10 +5,10 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class City implements Serializable {
     private String name;
-    private Double coordX;
-    private Double coordY;
+    private String coordX;
+    private String coordY;
 
-    public City(String name, Double coordX, Double coordY) {
+    public City(String name, String coordX, String coordY) {
         this.name = name;
         this.coordX = coordX;
         this.coordY = coordY;
@@ -18,11 +18,11 @@ public class City implements Serializable {
         return name;
     }
 
-    public Double getCoordX() {
+    public String getCoordX() {
         return coordX;
     }
 
-    public Double getCoordY() {
+    public String getCoordY() {
         return coordY;
     }
 }
