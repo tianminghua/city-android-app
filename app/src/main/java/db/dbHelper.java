@@ -41,7 +41,6 @@ public class dbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // 在这里你可以处理数据库升级的逻辑
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITIES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);

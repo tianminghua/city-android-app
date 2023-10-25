@@ -54,65 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
+        <!-- recyclerview, used to create city list with button dynamically -->
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Champaign" />
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:layout_constraintBottom_toTopOf="@+id/buttonAddLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Button
-                android:id="@+id/buttonChampaign"
-                android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Show Details" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Chicago" />
-
-            <Button
-                android:id="@+id/buttonChicago"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Show Details" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Los Angeles" />
-
-            <Button
-                android:id="@+id/buttonLA"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Show Details" />
-        </LinearLayout>
 
         <TextView
             android:id="@+id/textView14"
@@ -124,6 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add a location" />
+
         <Button
                 android:text="List Management"
                 android:layout_width="match_parent"

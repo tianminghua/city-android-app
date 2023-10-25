@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
