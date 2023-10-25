@@ -114,8 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     Log.w(TAG, "Error writing document", e);
                                                 }
                                             });
-
-                                    //updateUI(user);
+                                    
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("user", userObject);
                                     startActivity(intent);
@@ -123,7 +122,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    task.getException().getMessage();
+                                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
                                     //updateUI(null);
                                 }
