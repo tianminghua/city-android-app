@@ -98,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonDelete.setOnClickListener(this);
         String selectedTheme = getIntent().getStringExtra("theme");
-        Log.d("ThemeDebug", "Selected themeactivity: " + selectedTheme);
-        // Set the theme based on the selected theme
         if (selectedTheme != null) {
             if (selectedTheme.equals("Theme.MyFirstApp")) {
                 setTheme(R.style.Theme_MyFirstApp);

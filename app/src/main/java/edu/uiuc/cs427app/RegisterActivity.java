@@ -106,7 +106,6 @@ public class RegisterActivity extends AppCompatActivity {
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "DocumentSnapshot successfully written!");
                                                     String selectedTheme = mapColorToTheme(theme);
-                                                    Log.d("ThemeDebug", "Selected theme: " + selectedTheme);
                                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                                     intent.putExtra("theme", selectedTheme);
                                                     intent.putExtra("user", userObject);
