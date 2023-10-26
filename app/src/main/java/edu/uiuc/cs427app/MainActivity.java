@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import java.util.HashMap;
 
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -96,8 +97,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         buttonDelete.setOnClickListener(this);
-
-
+        String selectedTheme = getIntent().getStringExtra("theme");
+        Log.d("ThemeDebug", "Selected themeactivity: " + selectedTheme);
+        // Set the theme based on the selected theme
+        if (selectedTheme != null) {
+            if (selectedTheme.equals("Theme.MyFirstApp")) {
+                setTheme(R.style.Theme_MyFirstApp);
+            } else if (selectedTheme.equals("Theme.MyFirstApp2")) {
+                setTheme(R.style.Theme_MyFirstApp2);
+            } else if (selectedTheme.equals("Theme.MyFirstApp3")) {
+                setTheme(R.style.Theme_MyFirstApp3);
+            }
+        }
     }
 
     @Override
@@ -164,8 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loadData(userId);
         }
     }
-
-
 }
 
 

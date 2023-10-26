@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import java.util.HashMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -80,7 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -106,6 +105,13 @@ public class RegisterActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                    String selectedTheme = mapColorToTheme(theme);
+                                                    Log.d("ThemeDebug", "Selected theme: " + selectedTheme);
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    intent.putExtra("theme", selectedTheme);
+                                                    intent.putExtra("user", userObject);
+                                                    startActivity(intent);
+                                                    finish();
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
@@ -130,12 +136,19 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         });
 
-
 //                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //                startActivity(intent);
 //                finish();
             }
         });
 
+    }
+    private String mapColorToTheme(String color) {
+        HashMap<String, String> colorToThemeMap = new HashMap<>();
+        colorToThemeMap.put("Purple", "Theme.MyFirstApp");
+        colorToThemeMap.put("Green", "Theme.MyFirstApp2");
+        colorToThemeMap.put("Blue", "Theme.MyFirstApp3");
+
+        return colorToThemeMap.get(color);
     }
 }
