@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         } else {
             welcomeNote.setVisibility(View.VISIBLE);
-            welcomeNote.setText("Welcome Back, " + currUser.getName() +
-                    "\n" + "Email: " + currUser.getEmail() + "    UI Theme: " + currUser.getTheme());
+            welcomeNote.setText("Welcome Back, " + currUser.getName());
 
 
             long userId = myDbHelper.ensureUserExists(currUser.getEmail());
@@ -97,13 +96,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         buttonDelete.setOnClickListener(this);
-        String selectedTheme = getIntent().getStringExtra("theme");
+
+        // setup UI theme based on the theme attribute under User
+        String selectedTheme = currUser.getTheme();
         if (selectedTheme != null) {
-            if (selectedTheme.equals("Theme.MyFirstApp")) {
+            if (selectedTheme.equals("Purple")) {
                 setTheme(R.style.Theme_MyFirstApp);
-            } else if (selectedTheme.equals("Theme.MyFirstApp2")) {
+            } else if (selectedTheme.equals("Green")) {
                 setTheme(R.style.Theme_MyFirstApp2);
-            } else if (selectedTheme.equals("Theme.MyFirstApp3")) {
+            } else if (selectedTheme.equals("Blue")) {
                 setTheme(R.style.Theme_MyFirstApp3);
             }
         }

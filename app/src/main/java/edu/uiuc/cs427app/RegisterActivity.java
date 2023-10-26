@@ -105,9 +105,9 @@ public class RegisterActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                    String selectedTheme = mapColorToTheme(theme);
+                                                    //String selectedTheme = mapColorToTheme(theme);
                                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                    intent.putExtra("theme", selectedTheme);
+                                                    //intent.putExtra("theme", selectedTheme);
                                                     intent.putExtra("user", userObject);
                                                     startActivity(intent);
                                                     finish();
@@ -142,12 +142,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-    private String mapColorToTheme(String color) {
-        HashMap<String, String> colorToThemeMap = new HashMap<>();
-        colorToThemeMap.put("Purple", "Theme.MyFirstApp");
-        colorToThemeMap.put("Green", "Theme.MyFirstApp2");
-        colorToThemeMap.put("Blue", "Theme.MyFirstApp3");
-
-        return colorToThemeMap.get(color);
-    }
+//    private String mapColorToTheme(String color) {
+//        HashMap<String, String> colorToThemeMap = new HashMap<>();
+//        colorToThemeMap.put("Purple", "Theme.MyFirstApp");
+//        colorToThemeMap.put("Green", "Theme.MyFirstApp2");
+//        colorToThemeMap.put("Blue", "Theme.MyFirstApp3");
+//
+//        return colorToThemeMap.get(color);
+//    }
 }
