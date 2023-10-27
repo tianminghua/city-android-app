@@ -53,6 +53,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // store User object passed into MainActivity
+        User currUser = (User)getIntent().getSerializableExtra("user");
+
+        // setup UI theme based on the theme attribute under User
+        String selectedTheme = currUser.getTheme();
+        if (selectedTheme != null) {
+            if (selectedTheme.equals("Purple")) {
+                setTheme(R.style.Theme_MyFirstApp);
+            } else if (selectedTheme.equals("Green")) {
+                setTheme(R.style.Theme_MyFirstApp2);
+            } else if (selectedTheme.equals("Blue")) {
+                setTheme(R.style.Theme_MyFirstApp3);
+            }
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -75,8 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // show the username after login
         mAuth = FirebaseAuth.getInstance();
 
-        User currUser = (User)getIntent().getSerializableExtra("user");
-
         if (currUser == null) {
             mAuth.signOut();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -97,17 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonDelete.setOnClickListener(this);
 
-        // setup UI theme based on the theme attribute under User
-        String selectedTheme = currUser.getTheme();
-        if (selectedTheme != null) {
-            if (selectedTheme.equals("Purple")) {
-                setTheme(R.style.Theme_MyFirstApp);
-            } else if (selectedTheme.equals("Green")) {
-                setTheme(R.style.Theme_MyFirstApp2);
-            } else if (selectedTheme.equals("Blue")) {
-                setTheme(R.style.Theme_MyFirstApp3);
-            }
-        }
+
     }
 
     @Override
