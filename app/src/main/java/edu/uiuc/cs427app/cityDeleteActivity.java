@@ -21,6 +21,21 @@ public class cityDeleteActivity extends AppCompatActivity implements View.OnClic
     private long userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        User currUser = (User)getIntent().getSerializableExtra("user");
+
+        // setup UI theme based on the theme attribute under User
+        String selectedTheme = currUser.getTheme();
+        if (selectedTheme != null) {
+            if (selectedTheme.equals("Purple")) {
+                setTheme(R.style.Theme_MyFirstApp);
+            } else if (selectedTheme.equals("Green")) {
+                setTheme(R.style.Theme_MyFirstApp2);
+            } else if (selectedTheme.equals("Blue")) {
+                setTheme(R.style.Theme_MyFirstApp3);
+            }
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_delete);
 

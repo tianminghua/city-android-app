@@ -48,11 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.loginPasswordBox);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override

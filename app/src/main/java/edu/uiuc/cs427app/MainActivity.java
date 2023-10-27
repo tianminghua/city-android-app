@@ -58,6 +58,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User currUser = (User)getIntent().getSerializableExtra("user");
 
         // setup UI theme based on the theme attribute under User
+        if (currUser == null) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        //assert currUser != null;
         String selectedTheme = currUser.getTheme();
         if (selectedTheme != null) {
             if (selectedTheme.equals("Purple")) {
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Initializing the UI components
         // The list of locations should be customized per user (change the implementation so that
@@ -91,23 +98,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // show the username after login
         mAuth = FirebaseAuth.getInstance();
 
-        if (currUser == null) {
-            mAuth.signOut();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            welcomeNote.setVisibility(View.VISIBLE);
-            welcomeNote.setText("Welcome Back, " + currUser.getName());
+        welcomeNote.setVisibility(View.VISIBLE);
+        welcomeNote.setText("Welcome Back, " + currUser.getName());
 
 
-            long userId = myDbHelper.ensureUserExists(currUser.getEmail());
-            recyclerView = findViewById(R.id.recyclerView);
-            cityAdapter = new CityAdapter(mycityList);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(cityAdapter);
-            loadData(userId);
-        }
+        long userId = myDbHelper.ensureUserExists(currUser.getEmail());
+        recyclerView = findViewById(R.id.recyclerView);
+        cityAdapter = new CityAdapter(mycityList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(cityAdapter);
+        loadData(userId);
+
+//        if (currUser == null) {
+//            mAuth.signOut();
+//            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//            startActivity(intent);
+//            finish();
+//        } else {
+//
+//        }
 
         buttonDelete.setOnClickListener(this);
 
@@ -124,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (currUser != null) {
                     long userId = myDbHelper.ensureUserExists(currUser.getEmail());
                     intent.putExtra("userId", userId);
+                    intent.putExtra("user", currUser);
                     startActivity(intent);
                 } else {
                     Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
@@ -137,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (currUser1 != null) {
                     long userId = myDbHelper.ensureUserExists(currUser1.getEmail());
                     intent.putExtra("userId", userId);
+                    intent.putExtra("user", currUser1);
                     startActivity(intent);
                 } else {
                     Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
