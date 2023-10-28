@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import java.util.HashMap;
 
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,12 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // buttons are added to layout programmatically
 
         Button buttonNew = findViewById(R.id.buttonAddLocation);
-
         Button buttonLogout = findViewById(R.id.logout);
         TextView welcomeNote = findViewById(R.id.welcomeNote);
-
         Button buttonDelete = findViewById(R.id.listManagementButton);
-
 
         buttonNew.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
@@ -101,22 +99,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         welcomeNote.setVisibility(View.VISIBLE);
         welcomeNote.setText("Welcome Back, " + currUser.getName());
 
-
+        // read city list in user db and show
         long userId = myDbHelper.ensureUserExists(currUser.getEmail());
         recyclerView = findViewById(R.id.recyclerView);
         cityAdapter = new CityAdapter(mycityList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(cityAdapter);
         loadData(userId);
-
-//        if (currUser == null) {
-//            mAuth.signOut();
-//            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//            startActivity(intent);
-//            finish();
-//        } else {
-//
-//        }
 
         buttonDelete.setOnClickListener(this);
 
@@ -127,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
+            // go to add city activity, and pass the user infos
             case R.id.buttonAddLocation:
                 intent = new Intent(this, CitySearchActivity.class);
                 User currUser = (User) getIntent().getSerializableExtra("user");
@@ -153,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
+            // logout
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 finish();
@@ -165,10 +155,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // test when click show detail, it will get city name
     public void showDetails(View view) {
-        int itemPosition = recyclerView.getChildLayoutPosition((View) view.getParent());
-        String cityName = mycityList.get(itemPosition);
-        Toast Toast = null;
-        Toast.makeText(this, "Showing details for " + cityName, Toast.LENGTH_SHORT).show();
+        LinearLayout parentLayout = (LinearLayout) view.getParent();
+        TextView cityNameTextView = parentLayout.findViewById(R.id.cityNameTextView);
+        String cityName = cityNameTextView.getText().toString();
+        Toast.makeText(this, "Show " + cityName + " Detail", Toast.LENGTH_SHORT).show();
     }
 
     // load city data from db by username

@@ -67,6 +67,7 @@ public class cityDeleteActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        // return ro front
         switch (v.getId()) {
             case R.id.backButton:
                 finish();
@@ -81,6 +82,7 @@ public class cityDeleteActivity extends AppCompatActivity implements View.OnClic
                 .setMessage("Are you sure you want to delete this city?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
+                    // delete if confirm
                     public void onClick(DialogInterface dialog, int which) {
                         myDbHelper.deleteCityForUser(userId, cityList.get(position));
                         cityList.remove(position);
