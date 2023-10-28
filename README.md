@@ -58,7 +58,7 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 |   wesleye2              |                                 |                       |
 |   dezhaol2              |                                 |                       |
 |   yyc2              |  We'd reviewed the requirements live as well as next steps on wrapping up the assignment  |                       |
-|   xzhuang8             |                                 |                       |
+|   xzhuang8             | reviewed the requirements     |    work on task 1 and 2                   |
 |   xx15             |                                 |                       |
 |                |                                 |                       |
 </br>
@@ -77,7 +77,7 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 |   wesleye2              |                                 |                       |
 |   dezhaol2              |                                 |                       |
 |   yyc2              |  We'd reviewed the requirements live as well as next steps on wrapping up the Milestone 3 assignment.  |                       |
-|   xzhuang8             |                                 |                       |
+|   xzhuang8             | reviewed the requirements     |        work on task2 for milestone3               |
 |   xx15             |                                 |                       |
 |                |                                 |                       |
 </br>
