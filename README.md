@@ -96,7 +96,7 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 |   wesleye2              |  Focused on task 2,3                               |                       | Milestone 4 assignment discussions
 |   dezhaol2              |  Focused on task 1, 2, 3                               | Milestone 4 assignment discussions                      |
 |   yyc2              | Focused on task 1,2  |                       | Milestone 4 assignment discussions
-|   xzhuang8             |      |        work on task2 for milestone3               | Milestone 4 assignment discussions
+|   xzhuang8             | work on task2 for milestone3      |        work on task2 for milestone3               | Milestone 4 assignment discussions
 |   xx15             |    work on task1,2 for milestone3                             |    Milestone 4 assignment discussions                   |
 |                |                                 |                       |
 </br>
