@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        // Show app title with username
+        setTitle("Team 39 - " + currUser.getName());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

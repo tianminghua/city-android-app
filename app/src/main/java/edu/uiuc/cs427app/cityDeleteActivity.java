@@ -36,6 +36,9 @@ public class cityDeleteActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
+        // Show app title with username
+        setTitle("Team 39 - " + currUser.getName());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_delete);
 
