@@ -75,13 +75,13 @@ public class RegisterActivity extends AppCompatActivity {
                 String theme = colorSpinner.getSelectedItem().toString();
 
 
-
+                // create user profile on Firebase with text input
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
+                                    // Register success, store user profile in User object
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Toast.makeText(RegisterActivity.this, user.getEmail() + ", your account is created",
@@ -95,15 +95,16 @@ public class RegisterActivity extends AppCompatActivity {
                                     userObject.addCity(city1);
                                     userObject.addCity(city2);
 
+                                    // Store the User object onto Firestore
                                     db.collection("users").document(user.getUid())
                                             .set(userObject)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                                // transfer to MainActivity with User object
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                    //String selectedTheme = mapColorToTheme(theme);
                                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                    //intent.putExtra("theme", selectedTheme);
                                                     intent.putExtra("user", userObject);
                                                     startActivity(intent);
                                                     finish();
@@ -131,19 +132,9 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         });
 
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//                finish();
             }
         });
 
     }
-//    private String mapColorToTheme(String color) {
-//        HashMap<String, String> colorToThemeMap = new HashMap<>();
-//        colorToThemeMap.put("Purple", "Theme.MyFirstApp");
-//        colorToThemeMap.put("Green", "Theme.MyFirstApp2");
-//        colorToThemeMap.put("Blue", "Theme.MyFirstApp3");
-//
-//        return colorToThemeMap.get(color);
-//    }
+
 }

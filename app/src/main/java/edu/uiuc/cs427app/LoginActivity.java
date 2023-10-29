@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        // render the register page when user click register button
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
+        // login with email and password through Firebase
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,9 +76,11 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-
+                // login with email and password through Firebase
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            // if login success, fetch user profile from Firestore
+                            // and store user profile in the User object
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
@@ -91,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                             .document(user.getUid())
                                             .get()
                                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                //store user profile in the User object
                                                 @Override
                                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
