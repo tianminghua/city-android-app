@@ -73,12 +73,12 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
 |   aashra5     |  Discussed and splitted Milestone 3 assignment into different groups. | Milestone 3 assignment wrap up.|
-|   tongli2     |  Went through all the requirements of milestone 3 together.|                       |
-|   wesleye2              |                                 |                       |
-|   dezhaol2              |                                 |                       |
-|   yyc2              |  We'd reviewed the requirements live as well as next steps on wrapping up the Milestone 3 assignment.  |                       |
-|   xzhuang8             | reviewed the requirements     |        work on task2 for milestone3               |
-|   xx15             |                                 |                       |
+|   tongli2     |  Went through all the requirements of milestone 3 together.|                       |work on task2 for milestone3
+|   wesleye2              |   Went through all the requirements of milestone 3 together.                              |   work on task2 for milestone3                    |
+|   dezhaol2              |   Went through all the requirements of milestone 3 together.                              |   work on task2 for milestone3                    |
+|   yyc2              |  We'd reviewed the requirements live as well as next steps on wrapping up the Milestone 3 assignment.  |  work on task2 for milestone3                     |
+|   xzhuang8             | reviewed the requirements     |        work on task2 for milestone3               | work on task2 for milestone3
+|   xx15             |   Went through all the requirements of milestone 3 together.                              |   work on task2 for milestone3                    |
 |                |                                 |                       |
 </br>
 
@@ -91,13 +91,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5     |  We worked on milestone 3 and finished it before the deadline | Milestone 4 assignment discussions.|
+|   tongli2     |  Focused on task 1 |   Milestone 4 assignment discussions.                    | Milestone 4 assignment discussions.|
+|   wesleye2              |  Focused on task 2,3                               |                       | Milestone 4 assignment discussions
+|   dezhaol2              |  Focused on task 1, 2, 3                               | Milestone 4 assignment discussions                      |
+|   yyc2              | Focused on task 1,2  |                       | Milestone 4 assignment discussions
+|   xzhuang8             |      |        work on task2 for milestone3               | Milestone 4 assignment discussions
+|   xx15             |    work on task1,2 for milestone3                             |    Milestone 4 assignment discussions                   |
 |                |                                 |                       |
 </br>
 
