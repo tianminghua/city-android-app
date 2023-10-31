@@ -112,5 +112,15 @@ public class dbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateUserCityKey(long userId, String cityKey) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PASSWORD, cityKey);
+        String whereClause = COLUMN_USER_ID + " = ?";
+        String[] whereArgs = new String[] { String.valueOf(userId) };
+        db.update(TABLE_USERS, values, whereClause, whereArgs);
+        db.close();
+    }
+
 }
 
