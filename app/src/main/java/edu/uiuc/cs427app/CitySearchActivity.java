@@ -98,8 +98,6 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
     // add city to db
     private void searchCity(String cityName) {
 
-
-        //String url = "https://api.accuweather.com/locations/v1/cities/search";
         String url = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete";
         String apiKey = "NMAmiNk68RDbijC9HZ18ue7J643yCOli";
         String query = cityName;
@@ -120,6 +118,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         queue.add(stringRequest);
 
     }
+
 
     private List<CityWeather> parseCities(String response) {
         List<CityWeather> cityList = new ArrayList<>();
@@ -156,11 +155,55 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         if (existingCities.contains(city.getName())) {
             Toast.makeText(this, "City already added", Toast.LENGTH_SHORT).show();
         } else {
-            mydbHelper.addCityForUser(userId, city.getName());
-            mydbHelper.updateUserCityKey(userId, city.getLocationKey());
-            Toast.makeText(this, "City added successfully", Toast.LENGTH_SHORT).show();
+            // get lon and lat
+            getCityCoordinates(city.getLocationKey(), new Callback() {
+                @Override
+                public void onSuccess(double longitude, double latitude) {
+                    // update db with lon and lat
+                    mydbHelper.addCityForUser(userId, city.getName(), city.getLocationKey(), longitude, latitude);
+                    mydbHelper.updateUserCityKey(userId, city.getLocationKey());
+                    runOnUiThread(() -> Toast.makeText(CitySearchActivity.this, "City added successfully", Toast.LENGTH_SHORT).show());
+                }
+
+                @Override
+                public void onFailure() {
+                    runOnUiThread(() -> Toast.makeText(CitySearchActivity.this, "Failed to get city coordinates", Toast.LENGTH_SHORT).show());
+                }
+            });
         }
     }
 
+    // request by location key for city lon and lat
+    private void getCityCoordinates(String locationKey, Callback callback) {
+        String url = "https://dataservice.accuweather.com/locations/v1/" + locationKey;
+        String apiKey = "NMAmiNk68RDbijC9HZ18ue7J643yCOli";
+
+        String fullUrl = String.format("%s?apikey=%s", url, apiKey);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, fullUrl,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        double longitude = jsonResponse.getJSONObject("GeoPosition").getDouble("Longitude");
+                        double latitude = jsonResponse.getJSONObject("GeoPosition").getDouble("Latitude");
+                        callback.onSuccess(longitude, latitude);
+                    } catch (JSONException e) {
+                        Log.e("CitySearchActivity", "JSON parsing error: " + e.getMessage());
+                        callback.onFailure();
+                    }
+                }, error -> {
+            Log.e("CitySearchActivity", "Network error: " + error.getMessage());
+            callback.onFailure();
+        });
+
+        queue.add(stringRequest);
+    }
+
+    private interface Callback {
+        void onSuccess(double longitude, double latitude);
+        void onFailure();
+    }
 
 }

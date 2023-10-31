@@ -4,6 +4,7 @@ public class CityWeather {
     private final String name;
     private final String locationKey;
 
+
     public CityWeather(String name, String locationKey) {
         this.name = name;
         this.locationKey = locationKey;
@@ -16,4 +17,5 @@ public class CityWeather {
     public String getLocationKey() {
         return locationKey;
     }
+
 }

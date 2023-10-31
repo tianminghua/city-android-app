@@ -23,6 +23,9 @@ public class dbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CITY_ID = "_id";
     public static final String COLUMN_CITY_NAME = "city_name";
     public static final String COLUMN_CITY_USER_ID = "user_id";
+    public static final String COLUMN_CITY_KEY = "city_key";
+    public static final String COLUMN_LONGITUDE = "longitude";
+    public static final String COLUMN_LATITUDE = "latitude";
 
     public dbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,6 +43,9 @@ public class dbHelper extends SQLiteOpenHelper {
                 COLUMN_CITY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_CITY_NAME + " TEXT NOT NULL, " +
                 COLUMN_CITY_USER_ID + " INTEGER NOT NULL, " +
+                COLUMN_CITY_KEY + " TEXT, " +
+                COLUMN_LONGITUDE + " REAL, " +
+                COLUMN_LATITUDE + " REAL, " +
                 "FOREIGN KEY(" + COLUMN_CITY_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "));";
         db.execSQL(createCityTable);
     }
@@ -48,6 +54,10 @@ public class dbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITIES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("ALTER TABLE " + TABLE_CITIES + " ADD COLUMN " + COLUMN_CITY_KEY + " TEXT");
+        db.execSQL("ALTER TABLE " + TABLE_CITIES + " ADD COLUMN " + COLUMN_LONGITUDE + " REAL");
+        db.execSQL("ALTER TABLE " + TABLE_CITIES + " ADD COLUMN " + COLUMN_LATITUDE + " REAL");
+        // ...
         onCreate(db);
     }
 
@@ -95,13 +105,17 @@ public class dbHelper extends SQLiteOpenHelper {
     }
 
     // add city
-    public void addCityForUser(long userId, String cityName) {
+    public void addCityForUser(long userId, String cityName, String cityKey, double longitude, double latitude) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_CITY_NAME, cityName);
         values.put(COLUMN_CITY_USER_ID, userId);
+        values.put(COLUMN_CITY_KEY, cityKey);
+        values.put(COLUMN_LONGITUDE, longitude);
+        values.put(COLUMN_LATITUDE, latitude);
         db.insert(TABLE_CITIES, null, values);
     }
+
 
     // delete city
     public void deleteCityForUser(long userId, String cityName) {
