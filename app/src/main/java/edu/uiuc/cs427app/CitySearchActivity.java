@@ -160,7 +160,8 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
                 @Override
                 public void onSuccess(double longitude, double latitude) {
                     // update db with lon and lat
-                    mydbHelper.addCityForUser(userId, city.getName(), city.getLocationKey(), longitude, latitude);
+                    boolean res = mydbHelper.addCityForUser(userId, city.getName(), city.getLocationKey(), longitude, latitude);
+                    if(!res)  Log.d("FailtowriteDB", "FailtowriteDB " );
                     mydbHelper.updateUserCityKey(userId, city.getLocationKey());
                     runOnUiThread(() -> Toast.makeText(CitySearchActivity.this, "City added successfully", Toast.LENGTH_SHORT).show());
                 }

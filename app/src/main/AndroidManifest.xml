@@ -38,6 +38,8 @@
         <activity
                 android:name=".CitySearchActivity"
                 android:exported="true"/>
+        <activity android:name=".WeatherActivity"
+                  android:exported="false"/>
 
 
 

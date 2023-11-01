@@ -157,18 +157,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // test when click show detail, it will get city name
-    public void showDetails(View view) {
+    public void showWeather(View view) {
         LinearLayout parentLayout = (LinearLayout) view.getParent();
-        TextView cityNameTextView = parentLayout.findViewById(R.id.cityNameTextView);
+        View grandParentLayout = (View) parentLayout.getParent();
+        TextView cityNameTextView = grandParentLayout.findViewById(R.id.cityNameTextView);
         String cityName = cityNameTextView.getText().toString();
-        Toast.makeText(this, "Show " + cityName + " Detail", Toast.LENGTH_SHORT).show();
+
+        // get location key
+        dbHelper mydbHelper = new dbHelper(this);
+        User currUser = (User) getIntent().getSerializableExtra("user");
+        long userId = myDbHelper.ensureUserExists(currUser.getEmail());
+        String locationKey = mydbHelper.getLocationKeyForCity(userId, cityName);
+
+        // go to weather activity and pass city name and location key
+        Intent intent = new Intent(this, WeatherActivity.class);
+        intent.putExtra("locationKey", locationKey);
+        intent.putExtra("cityName", cityName);
+        startActivity(intent);
     }
+
 
     // load city data from db by username
     private void loadData(long userId) {
         mycityList.clear();
         mycityList.addAll(myDbHelper.getCityListForUser(userId));
-        //mycityList = myDbHelper.getCityListForUser(userId);
         cityAdapter.notifyDataSetChanged();
     }
 

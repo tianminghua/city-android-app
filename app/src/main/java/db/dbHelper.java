@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +44,9 @@ public class dbHelper extends SQLiteOpenHelper {
                 COLUMN_CITY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_CITY_NAME + " TEXT NOT NULL, " +
                 COLUMN_CITY_USER_ID + " INTEGER NOT NULL, " +
-                COLUMN_CITY_KEY + " TEXT, " +
-                COLUMN_LONGITUDE + " REAL, " +
-                COLUMN_LATITUDE + " REAL, " +
+                COLUMN_CITY_KEY + " TEXT NOT NULL, " +
+                COLUMN_LONGITUDE + " REAL NOT NULL, " +
+                COLUMN_LATITUDE + " REAL NOT NULL, " +
                 "FOREIGN KEY(" + COLUMN_CITY_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "));";
         db.execSQL(createCityTable);
     }
@@ -57,7 +58,6 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("ALTER TABLE " + TABLE_CITIES + " ADD COLUMN " + COLUMN_CITY_KEY + " TEXT");
         db.execSQL("ALTER TABLE " + TABLE_CITIES + " ADD COLUMN " + COLUMN_LONGITUDE + " REAL");
         db.execSQL("ALTER TABLE " + TABLE_CITIES + " ADD COLUMN " + COLUMN_LATITUDE + " REAL");
-        // ...
         onCreate(db);
     }
 
@@ -105,7 +105,7 @@ public class dbHelper extends SQLiteOpenHelper {
     }
 
     // add city
-    public void addCityForUser(long userId, String cityName, String cityKey, double longitude, double latitude) {
+    public boolean addCityForUser(long userId, String cityName, String cityKey, double longitude, double latitude) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_CITY_NAME, cityName);
@@ -113,7 +113,8 @@ public class dbHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CITY_KEY, cityKey);
         values.put(COLUMN_LONGITUDE, longitude);
         values.put(COLUMN_LATITUDE, latitude);
-        db.insert(TABLE_CITIES, null, values);
+        long result = db.insert(TABLE_CITIES, null, values);
+        return result != -1;
     }
 
 
@@ -123,7 +124,6 @@ public class dbHelper extends SQLiteOpenHelper {
         String whereClause = COLUMN_CITY_USER_ID + " = ? AND " + COLUMN_CITY_NAME + " = ?";
         String[] whereArgs = new String[] { String.valueOf(userId), cityName };
         db.delete(TABLE_CITIES, whereClause, whereArgs);
-        db.close();
     }
 
     public void updateUserCityKey(long userId, String cityKey) {
@@ -133,8 +133,60 @@ public class dbHelper extends SQLiteOpenHelper {
         String whereClause = COLUMN_USER_ID + " = ?";
         String[] whereArgs = new String[] { String.valueOf(userId) };
         db.update(TABLE_USERS, values, whereClause, whereArgs);
-        db.close();
     }
+
+    // get city location key
+    public String getLocationKeyForCity(long userId, String cityName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_CITY_KEY};
+        String selection = COLUMN_CITY_USER_ID + " = ? AND " + COLUMN_CITY_NAME + " = ?";
+        String[] selectionArgs = {String.valueOf(userId), cityName};
+        Cursor cursor = db.query(TABLE_CITIES, columns, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex(COLUMN_CITY_KEY);
+            if (columnIndex != -1) {
+                String cityKey = cursor.getString(columnIndex);
+                cursor.close();
+                Log.d("DBHelper", "Found city key: " + cityKey + " for user: " + userId + " and city: " + cityName);
+                return cityKey;
+            } else {
+                Log.d("DBHelper", "Column index for city key not found");
+            }
+        } else {
+            Log.d("DBHelper", "No entry found for user: " + userId + " and city: " + cityName);
+        }
+        cursor.close();
+        return null;
+    }
+
+    // get city lon and lat
+    public double[] getCityLocation(long userId, String cityName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_LONGITUDE, COLUMN_LATITUDE};
+        String selection = COLUMN_CITY_USER_ID + " = ? AND " + COLUMN_CITY_NAME + " = ?";
+        String[] selectionArgs = {String.valueOf(userId), cityName};
+        Cursor cursor = db.query(TABLE_CITIES, columns, selection, selectionArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int longitudeIndex = cursor.getColumnIndex(COLUMN_LONGITUDE);
+            int latitudeIndex = cursor.getColumnIndex(COLUMN_LATITUDE);
+
+            if (longitudeIndex != -1 && latitudeIndex != -1) {
+                double longitude = cursor.getDouble(longitudeIndex);
+                double latitude = cursor.getDouble(latitudeIndex);
+                cursor.close();
+                return new double[]{longitude, latitude};
+            } else {
+                Log.d("DBHelper", "Column index for longitude or latitude not found");
+            }
+        } else {
+            Log.d("DBHelper", "No entry found for user: " + userId + " and city: " + cityName);
+        }
+
+        cursor.close();
+        return null;
+    }
+
 
 }
 

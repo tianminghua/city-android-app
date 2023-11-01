@@ -46,13 +46,15 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     // Describes the item view and metadata for the place within the RecyclerView
     static class CityViewHolder extends RecyclerView.ViewHolder {
         TextView cityNameTextView;
-        Button showDetailsButton;
+        Button Weathebutton;
+        Button Mapbutton;
 
         // Constructor for the ViewHolder
         public CityViewHolder(@NonNull View itemView) {
             super(itemView);
             cityNameTextView = itemView.findViewById(R.id.cityNameTextView);
-            showDetailsButton = itemView.findViewById(R.id.showDetails);
+            Weathebutton = itemView.findViewById(R.id.Weathebutton);
+            Mapbutton = itemView.findViewById(R.id.Mapbutton);
         }
     }
 }
