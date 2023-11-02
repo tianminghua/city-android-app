@@ -29,6 +29,24 @@ public class WeatherActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        User currUser = (User)getIntent().getSerializableExtra("user");
+
+        // setup UI theme based on the theme attribute under User
+        String selectedTheme = currUser.getTheme();
+        if (selectedTheme != null) {
+            if (selectedTheme.equals("Purple")) {
+                setTheme(R.style.Theme_MyFirstApp);
+            } else if (selectedTheme.equals("Green")) {
+                setTheme(R.style.Theme_MyFirstApp2);
+            } else if (selectedTheme.equals("Blue")) {
+                setTheme(R.style.Theme_MyFirstApp3);
+            }
+        }
+
+        // Show app title with username
+        setTitle("Team 39 - " + currUser.getName());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_weather);
 
@@ -56,7 +74,7 @@ public class WeatherActivity extends AppCompatActivity {
         String url = "https://dataservice.accuweather.com/currentconditions/v1/" + locationKey;
         String apiKey = getString(R.string.ACCU_API_KEY);
 
-        String fullUrl = String.format("%s?apikey=%s", url, apiKey);
+        String fullUrl = String.format("%s?apikey=%s&details=%s", url, apiKey, "true");
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -66,6 +84,8 @@ public class WeatherActivity extends AppCompatActivity {
                         JSONArray jsonResponseArray = new JSONArray(response);
                         JSONObject jsonResponse = jsonResponseArray.getJSONObject(0);;
                         String date = jsonResponse.getString("LocalObservationDateTime");
+                        String dateSub = date.substring(0, 16);
+                        String dateFinal = dateSub.replace('T', ' ');
                         String weatherCondition = jsonResponse.getString("WeatherText");
                         String humidity = jsonResponse.isNull("RelativeHumidity") ? "N/A" : jsonResponse.getString("RelativeHumidity");
 
@@ -74,19 +94,20 @@ public class WeatherActivity extends AppCompatActivity {
                         double temperatureValue = metricObject.getDouble("Value");
                         String temperature = String.format("%.2f °C", temperatureValue);
 
-//                        JSONObject windObject = jsonResponse.getJSONObject("Wind");
-//                        String windSpeed = windObject.getString("Speed");
-//                        JSONObject windDirectionObject = windObject.getJSONObject("Direction");
-//                        String windDirection = windDirectionObject.getString("English");
-//                        String windCondition = windSpeed + " " + windDirection;
+                        JSONObject windObject = jsonResponse.getJSONObject("Wind").getJSONObject("Speed").getJSONObject("Metric");
+                        String windSpeed = windObject.getString("Value");
+                        String speedUnit = windObject.getString("Unit");
+                        JSONObject windDirectionObject = jsonResponse.getJSONObject("Wind").getJSONObject("Direction");
+                        String windDirection = windDirectionObject.getString("English");
+                        String windCondition = windSpeed + " " + speedUnit + " " + windDirection;
 
                         runOnUiThread(() -> {
-                            cityTextView.setText(cityname);
-                            dateTextView.setText(date);
-                            temperatureTextView.setText(temperature);
-                            weatherConditionTextView.setText(weatherCondition);
-                            humidityTextView.setText(humidity);
-                            //windConditionTextView.setText(windCondition);
+                            cityTextView.setText("City Name: " + cityname);
+                            dateTextView.setText("Date & Time: " + dateFinal);
+                            temperatureTextView.setText("Temperature: " + temperature);
+                            weatherConditionTextView.setText("Weather: " + weatherCondition);
+                            humidityTextView.setText("Humidity: " + humidity + "%");
+                            windConditionTextView.setText("Wind: " + windCondition);
                         });
 
                     } catch (JSONException e) {
@@ -101,4 +122,8 @@ public class WeatherActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    // enable back button
+    public void onBackButtonClicked(View view) {
+        finish();
+    }
 }

@@ -230,4 +230,9 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         void onFailure();
     }
 
+    // enable back button
+    public void onBackButtonClicked(View view) {
+        finish();
+    }
+
 }

@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // go to weather activity and pass city name and location key
         Intent intent = new Intent(this, WeatherActivity.class);
+        intent.putExtra("user", currUser);
         intent.putExtra("locationKey", locationKey);
         intent.putExtra("cityName", cityName);
         startActivity(intent);

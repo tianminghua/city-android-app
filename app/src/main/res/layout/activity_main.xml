@@ -47,7 +47,9 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="List of Locations" />
+            android:text="List of Locations"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -58,17 +60,14 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="430dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
                 app:layout_constraintBottom_toTopOf="@+id/buttonAddLocation"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="match_parent"
-            android:layout_height="156dp" />
+
 
         <Button
             android:id="@+id/buttonAddLocation"
@@ -79,7 +78,9 @@
         <Button
                 android:text="List Management"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/listManagementButton"/>
+                android:layout_height="wrap_content"
+            android:id="@+id/listManagementButton"
+            />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

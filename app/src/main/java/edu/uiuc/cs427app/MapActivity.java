@@ -3,6 +3,7 @@ package edu.uiuc.cs427app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,5 +58,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .title(cityName));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currCity, 11));
+    }
+
+    // enable back button
+    public void onBackButtonClicked(View view) {
+        finish();
     }
 }
