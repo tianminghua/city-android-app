@@ -5,6 +5,9 @@
     <string name="backToMain">back to main page</string>
     <string name="showUserName">"Welcome back! "</string>
     <string name="register">Register</string>
+    <string name="MAP_API_KEY">AIzaSyBKu6aPr9KAWoag_DUEyOjNxCjWX1_gBp8</string>
+    <string name="WEATHER_API_KEY">YbyljHmFabQyj6z1Twv0wF7TVUaJWbfS</string>
+    <string name="ACCU_API_KEY">v3iT2ghFOqSE5AutDVlAGkHF8dkme2wI</string>
     <string-array name="colors_array">
         <item>Blue</item>
         <item>Green</item>

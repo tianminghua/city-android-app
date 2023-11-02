@@ -54,7 +54,7 @@ public class WeatherActivity extends AppCompatActivity {
         if(locationKey == null)
             Log.d("LocationKey", "Location Key: " );
         String url = "https://dataservice.accuweather.com/currentconditions/v1/" + locationKey;
-        String apiKey = "NMAmiNk68RDbijC9HZ18ue7J643yCOli";
+        String apiKey = getString(R.string.ACCU_API_KEY);
 
         String fullUrl = String.format("%s?apikey=%s", url, apiKey);
 

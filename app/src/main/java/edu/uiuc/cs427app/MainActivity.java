@@ -176,6 +176,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    public void showMap(View view) {
+        LinearLayout parentLayout = (LinearLayout) view.getParent();
+        View grandParentLayout = (View) parentLayout.getParent();
+        TextView cityNameTextView = grandParentLayout.findViewById(R.id.cityNameTextView);
+        String cityName = cityNameTextView.getText().toString();
+
+        // get location key
+        dbHelper mydbHelper = new dbHelper(this);
+        User currUser = (User) getIntent().getSerializableExtra("user");
+        long userId = myDbHelper.ensureUserExists(currUser.getEmail());
+        double[] coords = mydbHelper.getCityLocation(userId, cityName);
+
+
+        // go to weather activity and pass city name and location key
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("coordX", coords[0]);
+        intent.putExtra("coordY", coords[1]);
+        intent.putExtra("cityName", cityName);
+        startActivity(intent);
+    }
+
 
     // load city data from db by username
     private void loadData(long userId) {

@@ -1,6 +1,7 @@
 package edu.uiuc.cs427app;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -74,18 +75,32 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() >= 3) {
-                    searchCity(charSequence.toString());
-                }
+//                if (charSequence.length() >= 3) {
+//                    searchCity(charSequence.toString());
+//                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {}
         });
 
+        // search button
+        ImageButton searchButton = findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchCity(autoCompleteTextViewCityName.getText().toString());
+            }
+        });
+
         // back to main
         ImageButton buttonBack = findViewById(R.id.backButton);
-        buttonBack.setOnClickListener(this);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -99,7 +114,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
     private void searchCity(String cityName) {
 
         String url = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete";
-        String apiKey = "NMAmiNk68RDbijC9HZ18ue7J643yCOli";
+        String apiKey = getString(R.string.ACCU_API_KEY);
         String query = cityName;
 
         String fullUrl = String.format("%s?apikey=%s&q=%s", url, apiKey, query);
@@ -172,6 +187,14 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
                 }
             });
         }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 300);
+
     }
 
     // request by location key for city lon and lat

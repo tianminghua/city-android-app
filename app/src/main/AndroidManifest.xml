@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.uiuc.cs427app">
+    package="edu.uiuc.cs427app">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/Theme.MyFirstApp">
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyFirstApp">
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".DetailsActivity"
             android:exported="true" />
         <activity
-                android:name=".cityDeleteActivity"
-                android:exported="true"/>
+            android:name=".cityDeleteActivity"
+            android:exported="true" />
         <activity
-                android:name=".CitySearchActivity"
-                android:exported="true"/>
-        <activity android:name=".WeatherActivity"
-                  android:exported="false"/>
+            android:name=".CitySearchActivity"
+            android:exported="true" />
+        <activity
+            android:name=".WeatherActivity"
+            android:exported="false" />
 
-
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/MAP_API_KEY" />
     </application>
 
 </manifest>
