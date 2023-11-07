@@ -47,7 +47,7 @@ public class SearchCityAdapter extends RecyclerView.Adapter<SearchCityAdapter.Ci
         }
 
         public void bind(CityWeather city, OnCityClickListener listener) {
-            textView.setText(city.getName());
+            textView.setText(city.getFullName());
             itemView.setOnClickListener(v -> listener.onCityClick(city));
         }
     }

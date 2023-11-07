@@ -143,7 +143,15 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
                 JSONObject cityObject = jsonArray.getJSONObject(i);
                 String cityName = cityObject.getString("LocalizedName");
                 String locationKey = cityObject.getString("Key");
-                cityList.add(new CityWeather(cityName, locationKey));
+                // get area object and area name
+                JSONObject area = cityObject.getJSONObject("AdministrativeArea");
+                String areaName = area.getString("LocalizedName");
+                // get country object and country name
+                JSONObject country = cityObject.getJSONObject("Country");
+                String countryName = country.getString("LocalizedName");
+                CityWeather city = new CityWeather(cityName, locationKey);
+                city.addAreaAndCountry(areaName, countryName);
+                cityList.add(city);
             }
         } catch (JSONException e) {
             e.printStackTrace();
