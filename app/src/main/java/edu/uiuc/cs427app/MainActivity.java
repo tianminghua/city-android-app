@@ -195,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("coordX", coords[0]);
         intent.putExtra("coordY", coords[1]);
         intent.putExtra("cityName", cityName);
+        intent.putExtra("user", currUser);
         startActivity(intent);
     }
 

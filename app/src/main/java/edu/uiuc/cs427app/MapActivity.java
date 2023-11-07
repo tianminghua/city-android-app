@@ -23,6 +23,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        User currUser = (User)getIntent().getSerializableExtra("user");
+
+        // setup UI theme based on the theme attribute under User
+        String selectedTheme = currUser.getTheme();
+        if (selectedTheme != null) {
+            if (selectedTheme.equals("Purple")) {
+                setTheme(R.style.Theme_MyFirstApp);
+            } else if (selectedTheme.equals("Green")) {
+                setTheme(R.style.Theme_MyFirstApp2);
+            } else if (selectedTheme.equals("Blue")) {
+                setTheme(R.style.Theme_MyFirstApp3);
+            }
+        }
+
+        // Show app title with username
+        setTitle("Team 39 - " + currUser.getName());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
