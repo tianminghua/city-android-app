@@ -1,16 +1,21 @@
 package edu.uiuc.cs427app;
 
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
@@ -94,20 +99,53 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         });
 
         // back to main
-        ImageButton buttonBack = findViewById(R.id.backButton);
-        buttonBack.setOnClickListener(new View.OnClickListener() {
+//        ImageButton buttonBack = findViewById(R.id.backButton);
+//        buttonBack.setOnClickListener(this);
+//        buttonBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d("BackButton", "Back button clicked!");
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(buttonBack.getWindowToken(), 0);
+//                finish();
+//            }
+//        });
+
+        // hide the back button when keyboard is shown
+        ConstraintLayout layoutToHide = findViewById(R.id.linearLayout);
+
+// Attach a global layout listener to detect keyboard visibility changes
+        layoutToHide.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                layoutToHide.getWindowVisibleDisplayFrame(r);
+
+                int screenHeight = layoutToHide.getRootView().getHeight();
+                int keypadHeight = screenHeight - r.bottom;
+
+                // Determine if the keyboard is visible
+                if (keypadHeight > screenHeight * 0.15) { // You can adjust this threshold
+                    // Keyboard is visible, hide the element
+                    layoutToHide.setVisibility(View.GONE);
+                } else {
+                    // Keyboard is not visible, show the element
+                    layoutToHide.setVisibility(View.VISIBLE);
+                }
             }
         });
+
     }
+
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.backButton) {
-            finish();
-        }
+//        if (v.getId() == R.id.backButton) {
+//            Log.d("BackButton", "Back button clicked!");
+//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//            finish();
+//        }
     }
 
     // add city to db
@@ -240,6 +278,9 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
 
     // enable back button
     public void onBackButtonClicked(View view) {
+        Log.d("BackButton", "Back button clicked!");
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         finish();
     }
 

@@ -41,6 +41,7 @@
             android:exported="true" />
         <activity
             android:name=".CitySearchActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".WeatherActivity"
