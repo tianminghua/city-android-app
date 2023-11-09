@@ -74,6 +74,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
             addCityToDatabase(selectedCity);
         });
 
+        // monitor if new text typed in
         autoCompleteTextViewCityName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -98,18 +99,6 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        // back to main
-//        ImageButton buttonBack = findViewById(R.id.backButton);
-//        buttonBack.setOnClickListener(this);
-//        buttonBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d("BackButton", "Back button clicked!");
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(buttonBack.getWindowToken(), 0);
-//                finish();
-//            }
-//        });
 
         // hide the back button when keyboard is shown
         ConstraintLayout layoutToHide = findViewById(R.id.linearLayout);
@@ -137,7 +126,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-
+    // back button
     @Override
     public void onClick(View v) {
 //        if (v.getId() == R.id.backButton) {
@@ -172,7 +161,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-
+// parse response to get weather info needed
     private List<CityWeather> parseCities(String response) {
         List<CityWeather> cityList = new ArrayList<>();
         try {
@@ -197,6 +186,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         return cityList;
     }
 
+    // show search result
     private void showCities(List<CityWeather> cityList) {
         this.cityList.clear();
         this.cityList.addAll(cityList);
@@ -204,6 +194,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         recyclerViewCities.setVisibility(View.VISIBLE);
     }
 
+    //add city to db
     private void addCityToDatabase(CityWeather city) {
         long userId = getIntent().getLongExtra("userId", -1);
         if (userId == -1) {
@@ -218,6 +209,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         } else {
             // get lon and lat
             getCityCoordinates(city.getLocationKey(), new Callback() {
+                //add city info to db
                 @Override
                 public void onSuccess(double longitude, double latitude) {
                     // update db with lon and lat
@@ -226,7 +218,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
                     mydbHelper.updateUserCityKey(userId, city.getLocationKey());
                     runOnUiThread(() -> Toast.makeText(CitySearchActivity.this, "City added successfully", Toast.LENGTH_SHORT).show());
                 }
-
+                // toast if fail
                 @Override
                 public void onFailure() {
                     runOnUiThread(() -> Toast.makeText(CitySearchActivity.this, "Failed to get city coordinates", Toast.LENGTH_SHORT).show());
@@ -271,6 +263,7 @@ public class CitySearchActivity extends AppCompatActivity implements View.OnClic
         queue.add(stringRequest);
     }
 
+    //Callback interface for handling the results
     private interface Callback {
         void onSuccess(double longitude, double latitude);
         void onFailure();

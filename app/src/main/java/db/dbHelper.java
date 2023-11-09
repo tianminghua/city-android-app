@@ -126,6 +126,7 @@ public class dbHelper extends SQLiteOpenHelper {
         db.delete(TABLE_CITIES, whereClause, whereArgs);
     }
 
+    // update city key(not used any more)
     public void updateUserCityKey(long userId, String cityKey) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();

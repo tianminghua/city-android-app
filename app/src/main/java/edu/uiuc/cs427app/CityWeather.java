@@ -6,12 +6,13 @@ public class CityWeather {
     private String areaName;
     private String countryName;
 
-
+    // Constructor for CityWeather
     public CityWeather(String name, String locationKey) {
         this.name = name;
         this.locationKey = locationKey;
     }
 
+    // Get the name of the city.
     public String getName() {
         return name;
     }
@@ -25,6 +26,7 @@ public class CityWeather {
         return name + ", " + areaName + ", " + countryName;
     }
 
+    // Get the LocationKey of the city.
     public String getLocationKey() {
         return locationKey;
     }
