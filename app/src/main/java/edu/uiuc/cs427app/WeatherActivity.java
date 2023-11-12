@@ -30,6 +30,7 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // read the user info from the Intent
         User currUser = (User)getIntent().getSerializableExtra("user");
 
         // setup UI theme based on the theme attribute under User
@@ -57,30 +58,30 @@ public class WeatherActivity extends AppCompatActivity {
         humidityTextView = findViewById(R.id.Hum);
         windConditionTextView = findViewById(R.id.Wind);
 
+        // read the city and location info from the Intent
         String cityName = getIntent().getStringExtra("cityName");
         String locationKey = getIntent().getStringExtra("locationKey");
 
         fetchWeatherData(locationKey, cityName);
     }
 
-    private interface WeatherCallback {
-        void onSuccess(String Date, String temperature, String weatherCondition, String humidity, String windCondition);
-        void onFailure();
-    }
-
+    // fetch weather data from online API
     private void fetchWeatherData(String locationKey, String cityname) {
         if(locationKey == null)
             Log.d("LocationKey", "Location Key: " );
+
+        //generate the full api request url
         String url = "https://dataservice.accuweather.com/currentconditions/v1/" + locationKey;
         String apiKey = getString(R.string.ACCU_API_KEY);
-
         String fullUrl = String.format("%s?apikey=%s&details=%s", url, apiKey, "true");
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
+        // request get method from API
         StringRequest stringRequest = new StringRequest(Request.Method.GET, fullUrl,
                 response -> {
                     try {
+                        // read the weather info from the response JSON file
                         JSONArray jsonResponseArray = new JSONArray(response);
                         JSONObject jsonResponse = jsonResponseArray.getJSONObject(0);;
                         String date = jsonResponse.getString("LocalObservationDateTime");
@@ -101,6 +102,7 @@ public class WeatherActivity extends AppCompatActivity {
                         String windDirection = windDirectionObject.getString("English");
                         String windCondition = windSpeed + " " + speedUnit + " " + windDirection;
 
+                        // show the weather on UI
                         runOnUiThread(() -> {
                             cityTextView.setText("City Name: " + cityname);
                             dateTextView.setText("Date & Time: " + dateFinal);

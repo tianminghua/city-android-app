@@ -24,6 +24,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // read the user info from the Intent
         User currUser = (User)getIntent().getSerializableExtra("user");
 
         // setup UI theme based on the theme attribute under User
@@ -44,6 +45,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        // read the city information from the Intent
         cityName = getIntent().getStringExtra("cityName");
         coordX = getIntent().getDoubleExtra("coordX", 0.00);
         coordY = getIntent().getDoubleExtra("coordY", 0.00);
@@ -69,7 +71,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        // Add a marker in Sydney and move the camera
+        // Add a marker in the city location and move the camera to that location
         LatLng currCity = new LatLng(coordY, coordX);
         mMap.addMarker(new MarkerOptions()
                 .position(currCity)
