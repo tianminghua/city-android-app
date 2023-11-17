@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
 
         welcomeNote.setVisibility(View.VISIBLE);
-        welcomeNote.setText("Welcome Back, " + currUser.getName());
+        welcomeNote.setText("WELCOME BACK, " + currUser.getName() + "!");
 
         // read city list in user db and show
         long userId = myDbHelper.ensureUserExists(currUser.getEmail());

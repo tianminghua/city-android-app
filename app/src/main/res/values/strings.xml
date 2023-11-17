@@ -3,7 +3,7 @@
     <string name="loginNote">Login</string>
     <string name="login">login</string>
     <string name="backToMain">back to main page</string>
-    <string name="showUserName">"Welcome back! "</string>
+    <string name="showUserName">"WELCOME BACK! "</string>
     <string name="register">Register</string>
     <string name="MAP_API_KEY">AIzaSyBKu6aPr9KAWoag_DUEyOjNxCjWX1_gBp8</string>
     <string name="WEATHER_API_KEY">YbyljHmFabQyj6z1Twv0wF7TVUaJWbfS</string>
