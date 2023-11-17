@@ -47,6 +47,7 @@ public class InstrumentedTest {
     @After
     public void tearDown() {
         Intents.release();
+        IdlingRegistry.getInstance().unregister(idlingResource);
     }
 
     // IdlingResource that waits for a specified time
@@ -129,6 +130,11 @@ public class InstrumentedTest {
 
         Espresso.onView(ViewMatchers.withId(R.id.loginActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+    }
+
+    @Test
+    public void testRegister() {
+
     }
 
 
