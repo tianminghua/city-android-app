@@ -1,10 +1,11 @@
 package edu.uiuc.cs427app;
 
 // Import necessary packages
-import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 
+import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
@@ -16,12 +17,18 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.matcher.IntentMatchers;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+
 
 // Specify the test runner
 @RunWith(AndroidJUnit4.class)
@@ -35,6 +42,10 @@ public class InstrumentedTest {
 
     String loginEmail = "test1@gmail.com";
     String loginPassword = "123123";
+
+    String registerEmail = "registertest@gmail.com";
+    String registerPassword = "123123";
+    String registerName = "TESTER X";
 
     // Initialize Espresso Intents before each test
     @Before
@@ -135,6 +146,40 @@ public class InstrumentedTest {
     @Test
     public void testRegister() {
 
+        //click register button
+        Espresso.onView(ViewMatchers.withId(R.id.register)).perform(ViewActions.click());
+
+        // type in user info
+        Espresso.onView(ViewMatchers.withId(R.id.registerEmailBox))
+                .perform(ViewActions.typeText(registerEmail));
+        Espresso.onView(ViewMatchers.withId(R.id.registerPasswordBox))
+                .perform(ViewActions.typeText(registerPassword));
+        Espresso.onView(ViewMatchers.withId(R.id.registerNameBox))
+                .perform(ViewActions.typeText(registerName), closeSoftKeyboard());
+
+        // open Spinner dropdown
+//        Espresso.onView(ViewMatchers.withId(R.id.registerThemeBox)).perform(ViewActions.click());
+//        Espresso.onData(withItemValue("Your Desired Value")).perform(click());
+
+        Espresso.onView(ViewMatchers.withId(R.id.registerUser)).perform(ViewActions.click());
+
+        idlingResource = new ElapsedTimeIdlingResource(2000); // Adjust timeout as needed
+        IdlingRegistry.getInstance().register(idlingResource);
+
+        Espresso.onView(ViewMatchers.withId(R.id.welcomeNote))
+                .check(ViewAssertions.matches(ViewMatchers.withText("WELCOME BACK, " + registerName + "!")));
+
+        IdlingRegistry.getInstance().unregister(idlingResource);
+
+        // logout then login with the new account
+        Espresso.onView(ViewMatchers.withId(R.id.logout)).perform(ViewActions.click());
+        performLogin(registerEmail, registerPassword);
+        Espresso.onView(ViewMatchers.withId(R.id.welcomeNote))
+                .check(ViewAssertions.matches(ViewMatchers.withText("WELCOME BACK, " + registerName + "!")));
+
+        // delete the new registered account after test
+        deleteUser();
+
     }
 
 
@@ -152,6 +197,15 @@ public class InstrumentedTest {
         idlingResource = new ElapsedTimeIdlingResource(2000); // Adjust timeout as needed
         IdlingRegistry.getInstance().register(idlingResource);
 
+    }
+
+    private void deleteUser() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(user.getUid()).delete();
+
+        user.delete();
     }
 }
 
