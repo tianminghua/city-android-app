@@ -2,6 +2,11 @@ package edu.uiuc.cs427app;
 
 // Import necessary packages
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.Matchers.not;
 
 import android.content.Intent;
 
@@ -20,6 +25,8 @@ import androidx.test.runner.AndroidJUnit4;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+//import androidx.test.espresso.contrib.RecyclerViewActions;
+
 
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -181,6 +188,66 @@ public class InstrumentedTest {
         deleteUser();
 
     }
+    @Test
+    public void testAddCity(){
+        //login at first
+        performLogin(loginEmail,loginPassword);
+
+        //emulate to add a location by clicking the"AddLocation"button
+        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
+        //check that the app is now redirected to the searchlayout page
+        Espresso.onView(ViewMatchers.withId(R.id.searchLayout))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        //next we will emulate the search of 'newyork' city and click on the search button
+        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
+                .perform(ViewActions.typeText("new york"));
+
+        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
+                .perform(ViewActions.click());
+
+//        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+//                .perform(ViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+//        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+//                .perform(RecyclerViewActions.scrollToPosition(0));
+    }
+
+    @Test
+    public void testRemoveCity(){
+        //login at first
+        performLogin(loginEmail,loginPassword);
+
+        //emulate the action of clicking into list management
+        Espresso.onView(ViewMatchers.withId(R.id.listManagementButton)).perform(ViewActions.click());
+
+        //check that the app is now redirected to the delete Laout page
+        Espresso.onView(ViewMatchers.withId(R.id.deleteLayout))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        //emulate city deletion
+        Espresso.onView(ViewMatchers.withId(R.id.cityDeleteButton)).perform(ViewActions.click());
+
+        // Emulate clicking "No" button in the AlertDialog
+        Espresso.onView(ViewMatchers.withText("No"))
+                .perform(ViewActions.click());
+
+        //asserting that choosing "No" to delete the city means the city is still there in the list
+        Espresso.onView(ViewMatchers.withId(R.id.deleteLayout))
+                .check(ViewAssertions.matches(hasDescendant(ViewMatchers.withText("New York"))));
+
+        //emulate city deletion once more
+        Espresso.onView(ViewMatchers.withId(R.id.cityDeleteButton)).perform(ViewActions.click());
+
+        // Emulate clicking "Yes" button in the AlertDialog
+        Espresso.onView(ViewMatchers.withText("Yes"))
+                .perform(ViewActions.click());
+
+        //asserting that choosing "Yes" to delete the city means the city is no longer in the list
+        Espresso.onView(ViewMatchers.withId(R.id.deleteLayout))
+                .check(ViewAssertions.doesNotExist());
+
+    }
+
 
 
     // helper function to login
