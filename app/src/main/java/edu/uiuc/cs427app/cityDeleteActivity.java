@@ -1,5 +1,6 @@
 package edu.uiuc.cs427app;
 
+import android.os.Handler;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -91,6 +92,13 @@ public class cityDeleteActivity extends AppCompatActivity implements View.OnClic
                         cityList.remove(position);
                         adapter.notifyDataSetChanged();
                         Toast.makeText(cityDeleteActivity.this, "City deleted successfully", Toast.LENGTH_SHORT).show();
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        }, 300);
                     }
                 })
                 .setNegativeButton("No", null)
