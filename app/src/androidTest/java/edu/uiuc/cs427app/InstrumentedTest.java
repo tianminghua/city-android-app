@@ -29,6 +29,11 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 
 
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import android.view.View;
+import org.hamcrest.Matcher;
+
 
 // Specify the test runner
 @RunWith(AndroidJUnit4.class)
@@ -267,9 +272,6 @@ public class InstrumentedTest {
         }
 
 
-
-
-
         //emulate the action of clicking into list management
         Espresso.onView(ViewMatchers.withId(R.id.listManagementButton)).perform(ViewActions.click());
 
@@ -308,13 +310,62 @@ public class InstrumentedTest {
         }
 
         //asserting that choosing "Yes" to delete the city means the city is no longer in the list
-//        Espresso.onView(ViewMatchers.withId(R.id.deleteLayout))
-//                .check(ViewAssertions.doesNotExist());
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
                 .check(ViewAssertions.matches(not(hasDescendant(ViewMatchers.withText(addCity1)))));
 
         try {
             Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Test
+    public void testCheckWeather() throws InterruptedException {
+        //login at first
+        performLogin(loginEmail,loginPassword);
+
+        //add the first city
+        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
+                .perform(ViewActions.typeText(addCity1));
+        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
+                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.scrollToPosition(0));
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //add the second city
+        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
+                .perform(ViewActions.typeText(addCity2));
+        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
+                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.scrollToPosition(0));
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.Weathebutton)));
+
+        try {
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -347,5 +398,26 @@ public class InstrumentedTest {
 
         user.delete();
     }
+
+    public static ViewAction clickChildViewWithId(final int id) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return null;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Click on a child view with specified id.";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                View v = view.findViewById(id);
+                v.performClick();
+            }
+        };
+    }
+
 }
 
