@@ -13,6 +13,7 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.matcher.IntentMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +32,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
+
+import android.view.KeyEvent;
 import android.view.View;
 import org.hamcrest.Matcher;
 
@@ -51,8 +54,8 @@ public class InstrumentedTest {
     String registerEmail = "registertest@gmail.com";
     String registerPassword = "123123";
     String registerName = "TESTER X";
-    String addCity1 = "New York";
-    String addCity2 = "Chicago";
+    String cityName1 = "New York";
+    String cityName2 = "Chicago";
 
     // Initialize Espresso Intents before each test
     @Before
@@ -193,24 +196,7 @@ public class InstrumentedTest {
         //login at first
         performLogin(loginEmail,loginPassword);
 
-        //emulate to add a location by clicking the"AddLocation"button
-        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
-        //check that the app is now redirected to the searchlayout page
-        Espresso.onView(ViewMatchers.withId(R.id.searchLayout))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-
-        //next we will emulate the search of 'newyork' city and click on the search button
-        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
-                .perform(ViewActions.typeText(addCity1));
-
-        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
-                .perform(ViewActions.click());
-
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.scrollToPosition(0));
-
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        addCity(cityName1);
 
         try {
             Thread.sleep(1000);
@@ -220,13 +206,15 @@ public class InstrumentedTest {
 
         // check city added
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
-                .check(ViewAssertions.matches(hasDescendant(ViewMatchers.withText(addCity1))));
+                .check(ViewAssertions.matches(hasDescendant(ViewMatchers.withText(cityName1))));
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        deleteCity();
 
     }
 
@@ -236,24 +224,7 @@ public class InstrumentedTest {
         performLogin(loginEmail,loginPassword);
 
         // add before delete
-        //emulate to add a location by clicking the"AddLocation"button
-        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
-        //check that the app is now redirected to the searchlayout page
-        Espresso.onView(ViewMatchers.withId(R.id.searchLayout))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-
-        //next we will emulate the search of 'newyork' city and click on the search button
-        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
-                .perform(ViewActions.typeText(addCity1));
-
-        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
-                .perform(ViewActions.click());
-
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.scrollToPosition(0));
-
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        addCity(cityName1);
 
         try {
             Thread.sleep(1000);
@@ -261,12 +232,12 @@ public class InstrumentedTest {
             e.printStackTrace();
         }
 
-        // check city deleted
+        // check city exist before test delete
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
-                .check(ViewAssertions.matches(hasDescendant(ViewMatchers.withText(addCity1))));
+                .check(ViewAssertions.matches(hasDescendant(ViewMatchers.withText(cityName1))));
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -275,9 +246,21 @@ public class InstrumentedTest {
         //emulate the action of clicking into list management
         Espresso.onView(ViewMatchers.withId(R.id.listManagementButton)).perform(ViewActions.click());
 
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //check that the app is now redirected to the delete Laout page
         Espresso.onView(ViewMatchers.withId(R.id.deleteLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         //emulate city deletion
         Espresso.onView(ViewMatchers.withId(R.id.cityDeleteButton)).perform(ViewActions.click());
@@ -287,17 +270,23 @@ public class InstrumentedTest {
                 .perform(ViewActions.click());
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         //asserting that choosing "No" to delete the city means the city is still there in the list
         Espresso.onView(ViewMatchers.withId(R.id.deleteLayout))
-                .check(ViewAssertions.matches(hasDescendant(ViewMatchers.withText(addCity1))));
+                .check(ViewAssertions.matches(hasDescendant(ViewMatchers.withText(cityName1))));
 
         //emulate city deletion once more
         Espresso.onView(ViewMatchers.withId(R.id.cityDeleteButton)).perform(ViewActions.click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Emulate clicking "Yes" button in the AlertDialog
         Espresso.onView(ViewMatchers.withText("Yes"))
@@ -311,10 +300,10 @@ public class InstrumentedTest {
 
         //asserting that choosing "Yes" to delete the city means the city is no longer in the list
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
-                .check(ViewAssertions.matches(not(hasDescendant(ViewMatchers.withText(addCity1)))));
+                .check(ViewAssertions.matches(not(hasDescendant(ViewMatchers.withText(cityName1)))));
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -328,15 +317,7 @@ public class InstrumentedTest {
         performLogin(loginEmail,loginPassword);
 
         //add the first city
-        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
-                .perform(ViewActions.typeText(addCity1));
-        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
-                .perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.scrollToPosition(0));
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        addCity(cityName1);
 
         try {
             Thread.sleep(1000);
@@ -345,15 +326,7 @@ public class InstrumentedTest {
         }
 
         //add the second city
-        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
-                .perform(ViewActions.typeText(addCity2));
-        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
-                .perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.scrollToPosition(0));
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        addCity(cityName2);
 
         try {
             Thread.sleep(1000);
@@ -364,28 +337,54 @@ public class InstrumentedTest {
         //click on weather button in the first city in the list
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.Weathebutton)));
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //make sure weather layout is displayed
         Espresso.onView(ViewMatchers.withId(R.id.weatherActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         //make sure right city is displayed
         Espresso.onView(ViewMatchers.withId(R.id.CityName))
-                        .check(ViewAssertions.matches(ViewMatchers.withText(addCity1)));
+                        .check(ViewAssertions.matches(ViewMatchers.withText("City Name: " + cityName1)));
 
-        //click on weather button in the second city in the list
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.Weathebutton)));
-        //make sure weather layout is displayed
-        Espresso.onView(ViewMatchers.withId(R.id.weatherActivityLayout))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-        //make sure right city is displayed
-        Espresso.onView(ViewMatchers.withId(R.id.CityName))
-                .check(ViewAssertions.matches(ViewMatchers.withText(addCity2)));
-
+        //click the return button to the mainActivity
+        InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //click on weather button in the second city in the list
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.Weathebutton)));
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //make sure weather layout is displayed
+        Espresso.onView(ViewMatchers.withId(R.id.weatherActivityLayout))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        //make sure right city is displayed
+        Espresso.onView(ViewMatchers.withId(R.id.CityName))
+                .check(ViewAssertions.matches(ViewMatchers.withText("City Name: " + cityName2)));
+
+        //click the return button to the mainActivity
+        InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //delete the added cities after test
+        deleteCity();
+        deleteCity();
 
     }
 
@@ -395,15 +394,7 @@ public class InstrumentedTest {
         performLogin(loginEmail,loginPassword);
 
         //add the first city
-        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
-                .perform(ViewActions.typeText(addCity1));
-        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
-                .perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.scrollToPosition(0));
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        addCity(cityName1);
 
         try {
             Thread.sleep(1000);
@@ -412,15 +403,7 @@ public class InstrumentedTest {
         }
 
         //add the second city
-        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
-                .perform(ViewActions.typeText(addCity2));
-        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
-                .perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.scrollToPosition(0));
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        addCity(cityName2);
 
         try {
             Thread.sleep(1000);
@@ -430,29 +413,58 @@ public class InstrumentedTest {
 
         //click on map button in the first city in the list
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.mapButton)));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.Mapbutton)));
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //make sure map activity layout is displayed
         Espresso.onView(ViewMatchers.withId(R.id.mapActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         //make sure right city is displayed
         Espresso.onView(ViewMatchers.withId(R.id.cityNameMap))
-                .check(ViewAssertions.matches(ViewMatchers.withText(addCity1)));
+                .check(ViewAssertions.matches(ViewMatchers.withText(cityName1)));
+
+        //click the return button to the mainActivity
+        InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         //click on map button in the second city in the list
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.mapButton)));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.Mapbutton)));
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //make sure map activity layout is displayed
         Espresso.onView(ViewMatchers.withId(R.id.mapActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         //make sure right city is displayed
         Espresso.onView(ViewMatchers.withId(R.id.cityNameMap))
-                .check(ViewAssertions.matches(ViewMatchers.withText(addCity2)));
+                .check(ViewAssertions.matches(ViewMatchers.withText(cityName2)));
+
+        //click the return button to the mainActivity
+        InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //delete the added cities after test
+        deleteCity();
+        deleteCity();
 
     }
 
@@ -501,6 +513,70 @@ public class InstrumentedTest {
                 v.performClick();
             }
         };
+    }
+
+    public void addCity(String cityName) {
+        //emulate to add a location by clicking the"AddLocation"button
+        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
+        //check that the app is now redirected to the searchlayout page
+        Espresso.onView(ViewMatchers.withId(R.id.searchLayout))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        //next we will emulate the search of 'newyork' city and click on the search button
+        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
+                .perform(ViewActions.typeText(cityName));
+
+        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
+                .perform(ViewActions.click());
+
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.scrollToPosition(0));
+
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+    }
+
+    public void deleteCity() {
+        //emulate the action of clicking into list management
+        Espresso.onView(ViewMatchers.withId(R.id.listManagementButton)).perform(ViewActions.click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //emulate city deletion once more
+        //Espresso.onView(ViewMatchers.withId(R.id.cityDeleteButton)).perform(ViewActions.click());
+
+        //click on weather button in the first city in the list
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView1))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.cityDeleteButton)));
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Emulate clicking "Yes" button in the AlertDialog
+        Espresso.onView(ViewMatchers.withText("Yes"))
+                .perform(ViewActions.click());
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        //go back to the main page
+//        //InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+//
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
