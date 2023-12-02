@@ -361,8 +361,92 @@ public class InstrumentedTest {
             e.printStackTrace();
         }
 
+        //click on weather button in the first city in the list
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.Weathebutton)));
+        //make sure weather layout is displayed
+        Espresso.onView(ViewMatchers.withId(R.layout.activity_city_weather))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        //make sure right city is displayed
+        Espresso.onView(ViewMatchers.withId(R.id.cityTextView))
+                        .check(ViewAssertions.matches(ViewMatchers.withText(addCity1)));
+
+        //click on weather button in the second city in the list
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.Weathebutton)));
+        //make sure weather layout is displayed
+        Espresso.onView(ViewMatchers.withId(R.layout.activity_city_weather))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        //make sure right city is displayed
+        Espresso.onView(ViewMatchers.withId(R.id.cityTextView))
+                .check(ViewAssertions.matches(ViewMatchers.withText(addCity2)));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testCheckMap() throws InterruptedException {
+        //login at first
+        performLogin(loginEmail,loginPassword);
+
+        //add the first city
+        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
+                .perform(ViewActions.typeText(addCity1));
+        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
+                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.scrollToPosition(0));
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //add the second city
+        Espresso.onView(ViewMatchers.withId(R.id.buttonAddLocation)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.searchTextView))
+                .perform(ViewActions.typeText(addCity2));
+        Espresso.onView(ViewMatchers.withId(R.id.searchButton))
+                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.scrollToPosition(0));
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView2))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //click on map button in the first city in the list
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.mapButton)));
+        //make sure map activity layout is displayed
+        Espresso.onView(ViewMatchers.withId(R.layout.activity_map))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        //make sure right city is displayed
+        Espresso.onView(ViewMatchers.withId(R.id.cityNameBox))
+                .check(ViewAssertions.matches(ViewMatchers.withText(addCity1)));
+
+        //click on map button in the second city in the list
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.mapButton)));
+        //make sure map activity layout is displayed
+        Espresso.onView(ViewMatchers.withId(R.layout.activity_map))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        //make sure right city is displayed
+        Espresso.onView(ViewMatchers.withId(R.id.cityNameBox))
+                .check(ViewAssertions.matches(ViewMatchers.withText(addCity2)));
 
         try {
             Thread.sleep(1000);
