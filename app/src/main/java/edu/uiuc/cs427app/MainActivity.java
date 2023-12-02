@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         double[] coords = mydbHelper.getCityLocation(userId, cityName);
 
 
-        // go to weather activity and pass city name and location key
+        // go to map activity and pass city name and location key
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("coordX", coords[0]);
         intent.putExtra("coordY", coords[1]);

@@ -365,20 +365,20 @@ public class InstrumentedTest {
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.Weathebutton)));
         //make sure weather layout is displayed
-        Espresso.onView(ViewMatchers.withId(R.layout.activity_city_weather))
+        Espresso.onView(ViewMatchers.withId(R.id.weatherActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         //make sure right city is displayed
-        Espresso.onView(ViewMatchers.withId(R.id.cityTextView))
+        Espresso.onView(ViewMatchers.withId(R.id.CityName))
                         .check(ViewAssertions.matches(ViewMatchers.withText(addCity1)));
 
         //click on weather button in the second city in the list
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.Weathebutton)));
         //make sure weather layout is displayed
-        Espresso.onView(ViewMatchers.withId(R.layout.activity_city_weather))
+        Espresso.onView(ViewMatchers.withId(R.id.weatherActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         //make sure right city is displayed
-        Espresso.onView(ViewMatchers.withId(R.id.cityTextView))
+        Espresso.onView(ViewMatchers.withId(R.id.CityName))
                 .check(ViewAssertions.matches(ViewMatchers.withText(addCity2)));
 
         try {
@@ -432,20 +432,20 @@ public class InstrumentedTest {
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.mapButton)));
         //make sure map activity layout is displayed
-        Espresso.onView(ViewMatchers.withId(R.layout.activity_map))
+        Espresso.onView(ViewMatchers.withId(R.id.mapActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         //make sure right city is displayed
-        Espresso.onView(ViewMatchers.withId(R.id.cityNameBox))
+        Espresso.onView(ViewMatchers.withId(R.id.cityNameMap))
                 .check(ViewAssertions.matches(ViewMatchers.withText(addCity1)));
 
         //click on map button in the second city in the list
         Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.mapButton)));
         //make sure map activity layout is displayed
-        Espresso.onView(ViewMatchers.withId(R.layout.activity_map))
+        Espresso.onView(ViewMatchers.withId(R.id.mapActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         //make sure right city is displayed
-        Espresso.onView(ViewMatchers.withId(R.id.cityNameBox))
+        Espresso.onView(ViewMatchers.withId(R.id.cityNameMap))
                 .check(ViewAssertions.matches(ViewMatchers.withText(addCity2)));
 
         try {
