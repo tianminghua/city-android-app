@@ -186,13 +186,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5     | Focus on task 2,3 of Milestone 5 | Milestone 5 assignment discussions.| Milestone 5 assignment discussions.|
+|   tongli2     |  Focus on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions.                    | Milestone 5 assignment discussions.|
+|   wesleye2              |  Focus on task 1,2,3, 5 of Milestone 5                             |  Milestone 5 assignment discussions.|
+|   dezhaol2              |  Focus on task 1,2,3,4,5 of Milestone 5                             | Milestone 5 assignment discussions                      |
+|   yyc2              | Focus on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions                    | Milestone 5 assignment discussions. |
+|   xzhuang8             | Focus on task 1,2,3,4,5 of Milestone 5      |        Milestone 5 assignment discussions               |
+|   xx15             |    Focus on task 2,3 of Milestone 5                            |    Milestone 5 assignment discussions                   |
 |                |                                 |                       |
 </br>
 
@@ -205,13 +205,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5     | Focus on task 2,3 of Milestone 5 | Milestone 5 assignment discussions.| Milestone 5 assignment discussions.|
+|   tongli2     |  Focus on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions.                    | Milestone 5 assignment discussions.|
+|   wesleye2              |  Focus on task 1,2,3, 5 of Milestone 5                             |  Milestone 5 assignment discussions.|
+|   dezhaol2              |  Focus on task 1,2,3,4,5 of Milestone 5                             | Milestone 5 assignment discussions                      |
+|   yyc2              | Focus on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions                    | Milestone 5 assignment discussions. |
+|   xzhuang8             | Focus on task 1,2,3,4,5 of Milestone 5      |        Milestone 5 assignment discussions               |
+|   xx15             |    Focus on task 2,3 of Milestone 5                            |    Milestone 5 assignment discussions                   |
 |                |                                 |                       |
 </br>
 
@@ -224,13 +224,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5     | Focus on task 2,3 of Milestone 5 | Milestone 5 assignment discussions.| Milestone 5 assignment discussions.|
+|   tongli2     |  Focus on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions.                    | Milestone 5 assignment discussions.|
+|   wesleye2              |  Focus on task 1,2,3, 5 of Milestone 5                             |  Milestone 5 assignment discussions.|
+|   dezhaol2              |  Focus on task 1,2,3,4,5 of Milestone 5                             | Milestone 5 assignment discussions                      |
+|   yyc2              | Focus on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions                    | Milestone 5 assignment discussions. |
+|   xzhuang8             | Focus on task 1,2,3,4,5 of Milestone 5      |        Milestone 5 assignment discussions               |
+|   xx15             |    Focus on task 2,3 of Milestone 5                            |    Milestone 5 assignment discussions                   |
 |                |                                 |                       |
 </br>
 
@@ -243,12 +243,12 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5     | Finished on task 2,3 of Milestone 5 | Milestone 5 assignment discussions.| Milestone 5 assignment discussions.|
+|   tongli2     |  Finished on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions.                    | Milestone 5 assignment discussions.|
+|   wesleye2              |  Finished on task 1,2,3, 5 of Milestone 5                             |  Milestone 5 assignment discussions.|
+|   dezhaol2              |  Finished on task 1,2,3,4,5 of Milestone 5                             | Milestone 5 assignment discussions                      |
+|   yyc2              | Finished on task 2,3 of Milestone 5 |   Milestone 5 assignment discussions                    | Milestone 5 assignment discussions. |
+|   xzhuang8             | Finished on task 1,2,3,4,5 of Milestone 5      |        Milestone 5 assignment discussions               |
+|   xx15             |    Finished  on task 2,3 of Milestone 5                            |    Milestone 5 assignment discussions                   |
 |                |                                 |                       |
 </br>
