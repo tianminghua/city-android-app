@@ -35,13 +35,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
 |   aashra5     |  We got to know each teammate and assign each teammate   | Milestone 2 assignment|
-|   tongli2     |  We also finished milestone 1 together during this meeting|                       |
-|   wesleye2              |                                 |                       |
-|   dezhaol2              |                                 |                       |
-|   yyc2              |                                 |                       |
-|   xzhuang8             |                                 |                       |
-|   xx15             |                                 |                       |
-|                |                                 |                       |
+|   tongli2     |  We also finished milestone 1 together during this meeting|                       | Milestone 2 assignment
+|   wesleye2              | We also finished milestone 1 together during this meeting                                | Milestone 2 assignment                      |
+|   dezhaol2              |  We also finished milestone 1 together during this meeting                               | Milestone 2 assignment                      |
+|   yyc2              |   We also finished milestone 1 together during this meeting                              |  Milestone 2 assignment                     |
+|   xzhuang8             |   We also finished milestone 1 together during this meeting                              |   Milestone 2 assignment                    |
+|   xx15             |  We also finished milestone 1 together during this meeting                               |  Milestone 2 assignment                     |
+|                |   We also finished milestone 1 together during this meeting                              |  Milestone 2 assignment                     |
 </br>
 
 
@@ -54,11 +54,11 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
 |   aashra5     |  We went and finished though the MileStone 2 assignment. | Milestone 3 assignment|
-|   tongli2     |  We discussed the next step of the project|                       |
-|   wesleye2              |                                 |                       |
-|   dezhaol2              |                                 |                       |
-|   yyc2              |  We'd reviewed the requirements live as well as next steps on wrapping up the assignment  |                       |
-|   xzhuang8             | We went and finished though the MileStone 2 assignment.      |    work on task 1 and 2                   |
+|   tongli2     |  We discussed the next step of the project|   Milestone 3 assignment                    |
+|   wesleye2              |  We went and finished though the MileStone 2 assignment.                                 |  Milestone 3 assignment                     |
+|   dezhaol2              |  We went and finished though the MileStone 2 assignment.                                 |  Milestone 3 assignment                     |
+|   yyc2              |  We'd reviewed the requirements live as well as next steps on wrapping up the assignment  |Milestone 3 assignment                       |
+|   xzhuang8             | We went and finished though the MileStone 2 assignment.      |    work on task 1 and 2                   |Milestone 3 assignment
 |   xx15             |                                 |                       |
 |                |                                 |                       |
 </br>
