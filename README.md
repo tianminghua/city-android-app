@@ -167,13 +167,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5     | Finshed task 2,3 | Milestone 5 assignment discussions.| Milestone 5 assignment discussions.|
+|   tongli2     |  Finshed on task 2,3 |   Milestone 5 assignment discussions.                    | Milestone 5 assignment discussions.|
+|   wesleye2              |  Finshed  on task 2,3                              |  Milestone 5 assignment discussions.|
+|   dezhaol2              |  Finshed on task 1,2,3,4                              | Milestone 5 assignment discussions                      |
+|   yyc2              | Finshed  on task 2,3 |   Milestone 5 assignment discussions                    | Milestone 5 assignment discussions. |
+|   xzhuang8             | Finshed  on task 1,2,3,4      |        Milestone 5 assignment discussions               |
+|   xx15             |    Finshed  on task 1,2,3                            |    Milestone 5 assignment discussions                   |
 |                |                                 |                       |
 </br>
 
