@@ -110,16 +110,15 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+|   aashra5     |  WMilestone 4 assignment discussions | Milestone 4 assignment discussions.|
+|   tongli2     |  Milestone 4 assignment discussions |   Milestone 4 assignment discussions.                    | Milestone 4 assignment discussions.|
+|   wesleye2              |  Milestone 4 assignment discussions                              |                       | Milestone 4 assignment discussions
+|   dezhaol2              |  Milestone 4 assignment discussions                              | Milestone 4 assignment discussions                      |
+|   yyc2              | Milestone 4 assignment discussions |                       | Milestone 4 assignment discussions
+|   xzhuang8             | Milestone 4 assignment discussions      |        Milestone 4 assignment discussions               |
+|   xx15             |    wMilestone 4 assignment discussions                            |    Milestone 4 assignment discussions                   |
 |                |                                 |                       |
 </br>
-
 
 <b>Week 6</b>
 </br>
